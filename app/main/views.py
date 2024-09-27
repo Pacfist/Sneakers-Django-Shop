@@ -6,7 +6,7 @@ def index(request):
         'title':'Home',
         'content':'Main page of website'
     }
-    return render(request, 'main/index.html',context)
+    return render(request, 'main.html',context)
 
 def about(request):
     return HttpResponse('about')

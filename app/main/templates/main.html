@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="main-page">
+    <div class="buttons">
+        <button id="catalogButton" class="btn">Catalog
+            <img src="{% static 'images/category.png' %}" alt="Basket Icon">
+        </button>
+        <button id="basketButton" class="btn">
+            Basket
+            <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon">
+        </button>
+    </div>
+    <h1>Welcome to Sneaker Store</h1>
+    
+</div>
+{% endblock %}

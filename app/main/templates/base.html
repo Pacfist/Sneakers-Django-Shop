@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneaker Store</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Info</a></li>
+            <li><a href="">Checking</a></li>
+            <li><a href="">Sign In</a></li>
+            <li><a href="">My Profile</a></li>
+        </ul>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button type="button">Search</button>
+        </div>
+    </div>
+
+    <!-- Main content area -->
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Pop-up Modals -->
+    <div id="catalogModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('catalogModal')">&times;</span>
+            <h2>Catalog</h2>
+            <ul>
+                <li>Sport Sneakers</li>
+                <li>Casual Sneakers</li>
+                <li>Running Sneakers</li>
+                <li>Basketball Sneakers</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="basketModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('basketModal')">&times;</span>
+            <h2>Basket</h2>
+            <ul>
+                <li>Standard Sneaker</li>
+                <li>Sneaker Cleaner</li>
+                <li>Extra Laces</li>
+                <li>Sneaker Protector Spray</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>
