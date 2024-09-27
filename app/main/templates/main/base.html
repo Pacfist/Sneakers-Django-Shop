@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sneaker Store</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
 </head>
 <body>
     <div class="navbar">
         <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">Info</a></li>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">Info</a></li>
             <li><a href="">Checking</a></li>
             <li><a href="">Sign In</a></li>
             <li><a href="">My Profile</a></li>
@@ -23,6 +24,17 @@
         </div>
     </div>
 
+     
+    <div class="buttons">
+        <button id="catalogButton" class="btn">Catalog
+            <img src="{% static 'images/category.png' %}"  alt="Category Icon" id="catalogButton" class="btn">
+        </button>
+        <button id="basketButton" class="btn">
+            Basket
+            <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon" id="basketButton" class="btn">
+        </button>
+    </div>
+
     <!-- Main content area -->
     <div class="main-content">
         {% block content %}{% endblock %}
@@ -30,15 +42,14 @@
 
     <!-- Pop-up Modals -->
     <div id="catalogModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content catalog-content">
             <span class="close" onclick="closeModal('catalogModal')">&times;</span>
             <h2>Catalog</h2>
-            <ul>
-                <li>Sport Sneakers</li>
-                <li>Casual Sneakers</li>
-                <li>Running Sneakers</li>
-                <li>Basketball Sneakers</li>
-            </ul>
+            <div class="catalog-grid">
+                {% for cat in categories%}
+                <a href="{% url "catalog" %}" class="catalog-item">{{cat.name}}</a>
+                {% endfor %}
+            </div>
         </div>
     </div>
 

@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+
+<div class="main-page">
+    <h1>Sneaker Catalog</h1>
+    <div class="catalog-container">
+       {% for prod in products %}
+        <div class="catalog-item">
+            <img src="{% static 'images/airmax90.png' %}" alt="Sneaker 1" class="sneaker-img">
+            <a href="{% url "product" %}"><h2>{{prod.name}}</h2></a>
+            <p>{{prod.price}}</p>
+            <p>{{prod.id}}</p>
+            <button class="btn add-to-cart">Add to Cart</button>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock content %}

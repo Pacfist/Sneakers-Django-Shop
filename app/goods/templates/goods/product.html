@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
+<div class="product-page">
+    <div class="product-image">
+        <img src="{% static 'images/airmax90.png' %}" alt="Product Image">
+    </div>
+    <div class="product-details">
+        <h1>Air Max 90</h1>
+        <p class="product-price">$120.00</p>
+        <p class="product-description">
+            Discover the comfort and style of the Air Max 90. This classic sneaker combines a sleek design with unmatched comfort, making it perfect for everyday wear.
+        </p>
+        <button class="btn add-to-cart">Add to Cart</button>
+    </div>
+</div>
+{% endblock %}

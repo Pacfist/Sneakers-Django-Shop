@@ -1,12 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from goods.models import Categories
 def index(request):
+
+    categories=Categories.objects.all()
+
     context={
-        'title':'Home',
-        'content':'Main page of website'
+        'title':'Home page',
+        'content':'Main page of website',
+        'categories':categories,
+        
     }
-    return render(request, 'main.html',context)
+    return render(request, 'main/main.html',context)
 
 def about(request):
-    return HttpResponse('about')
+    context={
+        'title':'About',
+        'content':'Main page of website'
+    }
+    return render(request, 'main/about.html',context)
