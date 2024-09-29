@@ -8,9 +8,7 @@ def index(request):
     context={
         'title':'Home page',
         'content':'Main page of website',
-        'categories':categories,
-        
-    }
+        }
     return render(request, 'main/main.html',context)
 
 def about(request):

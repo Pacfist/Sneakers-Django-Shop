@@ -22,6 +22,15 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def display_id(self):
+        return f"{self.id:05}"
+    
+    def sell_price(self):
+        if self.descount:
+            return round(self.price - self.price*self.descount/100,2)
+        return self.price
+
 
 
 

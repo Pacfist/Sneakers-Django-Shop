@@ -1,13 +1,15 @@
-/* Catalog Page */
+/* Main Page */
 .main-page {
     text-align: center;
     padding: 20px;
     background-color: #fff;
-    margin: 20px;
+    margin: 20px auto;
     border-radius: 8px;
     border: 1px solid #ddd;
+    max-width: 1200px;
 }
 
+/* Catalog Container */
 .catalog-container {
     display: flex;
     flex-wrap: wrap;
@@ -16,13 +18,17 @@
     padding: 20px;
 }
 
+/* Catalog Item Card */
 .catalog-item {
     background-color: #f8f8f8;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 15px;
-    width: 200px;
+    width: 250px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     transition: box-shadow 0.3s;
 }
 
@@ -30,34 +36,85 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.sneaker-img {
+/* Sneaker Images */
+.sneaker-img, .sneaker-img-notfound {
     width: 100%;
+    height: auto;
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
     margin-bottom: 10px;
+    border-radius: 4px;
 }
 
+/* Product Name */
 .catalog-item h2 {
     font-size: 18px;
-    margin: 10px 0;
     color: #333;
+    margin: 10px 0;
+    text-decoration: none;
 }
 
-.catalog-item p {
-    color: #777;
-    margin: 0 0 10px;
+/* Price Styling */
+.price {
+    margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
 }
 
+.original-price {
+    color: #999;
+    font-size: 14px;
+    text-decoration: line-through;
+}
+
+.discount-price {
+    color: #d32f2f;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Discount Label */
+.discount-label {
+    color: #fff;
+    background-color: #d32f2f;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+/* Add to Cart Button */
 .add-to-cart {
-    background-color: #444;
+    background-color: #008CBA;
     color: #fff;
     border: none;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 12px 20px;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    text-transform: uppercase;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-width: 200px;
 }
 
 .add-to-cart:hover {
-    background-color: #555;
+    background-color: #005f7f;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.add-to-cart:active {
+    background-color: #004a63;
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }

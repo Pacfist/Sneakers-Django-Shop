@@ -1,4 +1,6 @@
+{% load goods_tags %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,6 +48,7 @@
             <span class="close" onclick="closeModal('catalogModal')">&times;</span>
             <h2>Catalog</h2>
             <div class="catalog-grid">
+                {% tag_categories as categories %}
                 {% for cat in categories%}
                 <a href="{% url "catalog" %}" class="catalog-item">{{cat.name}}</a>
                 {% endfor %}
