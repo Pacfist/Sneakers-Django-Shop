@@ -28,12 +28,13 @@
 
      
     <div class="buttons">
-        <button id="catalogButton" class="btn">Catalog
-            <img src="{% static 'images/category.png' %}"  alt="Category Icon" id="catalogButton" class="btn">
+        <button id="catalogButton" class="btn">
+            <span>Catalog</span>
+            <img src="{% static 'images/category.png' %}" alt="Category Icon" class="btn-icon">
         </button>
         <button id="basketButton" class="btn">
-            Basket
-            <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon" id="basketButton" class="btn">
+            <span>Basket</span>
+            <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon" class="btn-icon">
         </button>
     </div>
 
@@ -50,7 +51,7 @@
             <div class="catalog-grid">
                 {% tag_categories as categories %}
                 {% for cat in categories%}
-                <a href="{% url "catalog" %}" class="catalog-item">{{cat.name}}</a>
+                <a href="{% url "catalog" cat.slug %}" class="catalog-item">{{cat.name}}</a>
                 {% endfor %}
             </div>
         </div>

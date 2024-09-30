@@ -67,48 +67,62 @@ body {
     background-color: #444;
 }
 /* Buttons */
+/* Button Container */
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 100px;
-    padding: 20px;
+    gap: 20px; /* Space between buttons */
+    margin: 20px 0;
 }
 
+/* Base Button Style */
 .btn {
-    background-color: transparent;
-    
-    border: none;
-    padding: 5px;
-    margin: 0 10px;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    border-radius: 4px;
-    transition: transform 0.3s;
-}
-
-#catalogButton, #basketButton {
-    
-    width: 40px; /* Reduced size */
-    height: 40px; /* Reduced size */
-    background-size: 30px 30px; /* Ensuring images are contained within buttons */
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-#catalogButton {
-    background-image: url('{% static "images/catalog.png" %}');
-}
-
-#basketButton {
-    background-image: url('{% static "images/basket-icon.png" %}');
+    gap: 10px; /* Space between text and icon */
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn:hover {
-    transform: scale(1.1);
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Slight upward movement on hover */
 }
+
+.btn:active {
+    background-color: #003f7f;
+    transform: translateY(0); /* Reset on click */
+}
+
+/* Button Icon Styling */
+.btn-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1); /* Ensure icon is white */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 
 /* Main Content */
 .main-content {

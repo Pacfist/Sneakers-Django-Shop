@@ -6,6 +6,7 @@ class Categories(models.Model):
 
     class Meta:
         db_table='category'
+        ordering=("id", )
 
     def __str__(self):
         return self.name

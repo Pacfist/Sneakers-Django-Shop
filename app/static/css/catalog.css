@@ -118,3 +118,49 @@
     transform: translateY(0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
+
+
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.pagination ul li {
+    display: inline;
+}
+
+.pagination ul li a {
+    text-decoration: none;
+    color: #007bff;
+    padding: 10px 18px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination ul li a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Styling for the current page number */
+.on_num_pagination {
+    background-color: #007bff;
+    color: white !important; /* Ensure text is white */
+    border-color: #007bff;
+    font-weight: bold;
+    font-size: 1rem;
+    
+}
