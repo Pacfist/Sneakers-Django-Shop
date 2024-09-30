@@ -14,7 +14,7 @@
             {% else %}
                 <img src="{% static "images/notfound.jpg" %}" alt="Sneaker Not Found" class="sneaker-img-notfound">
             {% endif %}
-            <a href="{% url "product" %}"><h2>{{prod.name}}</h2></a>
+            <a href="{% url 'product' prod.slug %}"><h2>{{prod.name}}</h2></a>
             {% if prod.descount %}
                 <p class="price">
                     <span class="original-price">{{prod.price}} CAD</span>

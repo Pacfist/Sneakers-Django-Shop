@@ -4,5 +4,5 @@ from goods.views import *
 
 urlpatterns = [
     path('', catalog, name='catalog'),
-    path('product/', product, name='product'),
+    path('product/<slug:product_slug>', product, name='product'),
 ] 
