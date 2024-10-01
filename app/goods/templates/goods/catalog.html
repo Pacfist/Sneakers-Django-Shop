@@ -1,11 +1,43 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load goods_tags %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
 
 <div class="main-page">
     <h1>Sneaker Catalog</h1>
+
+    <button id="filterButton" class="btn filter-btn">Filter</button>
+
+        <!-- Filter Form (hidden by default) -->
+        <div id="filterForm" class="filter-form">
+            <form  action="{% url 'catalog' slug_url %}" id="filterFormInner" method="get">
+                <!-- Discount Checkbox -->
+                <div class="form-group">
+                    <input type="checkbox" id="discount" name="discount" value="on"  {% if request.GET.discount == 'on' %}checked{% endif %}>
+                    <label for="discount">Show only discounted sneakers</label>
+                    <hr>
+                    <input type="checkbox" id="price_under_120" name="price_under_120" value="on"  {% if request.GET.price_under_120 == 'on' %}checked{% endif %}>
+                    <label for="discount">Price under 120CAD</label>
+                </div>
+
+                <!-- Sort Options -->
+                <div class="form-group">
+                    <label for="sort">Sort by:</label>
+                    <select id="sort" name="sort">
+                        <option value='default' {% if not request.GET.sort or request.GET.sort == 'default'%}selected{% endif %}>Default</option>
+                        <option value="low-to-high" {% if request.GET.sort == 'low-to-high' %}selected{% endif %}>Price: Low to High</option>
+                        <option value="high-to-low" {% if request.GET.sort == '-high-to-low' %}selected{% endif %}>Price: High to Low</option>
+                        <option value="-id" {% if request.GET.sort == '-id' %}selected{% endif %}>New One</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn apply-filter-btn">Apply Filters</button>
+            </form>
+        </div>
+
     <div class="catalog-container">
        {% for prod in products %}
         <div class="catalog-item">
@@ -28,13 +60,15 @@
         </div>
        {% endfor %}
     </div>
-
+    
     <div class="pagination">
+        
         <ul>
+            
             <li><a href="?page={{1}}">First</a></li>
             <li class="{% if not products.has_previous %} disabled {% endif %}">
                 <a href="{% if products.has_previous %}
-                    ?page={{products.previous_page_number}}
+                    ?{% change_params page=products.previous_page_number %}
                     {% else %}#
                 {% endif %}">Previous</a>
             </li>
@@ -43,15 +77,15 @@
             {% for page in products.paginator.page_range %}
                {% if page >= products.number|add:-2 and page <= products.number|add:2 %}
                     {% if curren_num_page == page %}
-                        <li ><a href="?page={{page}}" class='on_num_pagination'>{{ page }}</a></li>
+                        <li ><a href="?{% change_params page=page %}" class='on_num_pagination'>{{ page }}</a></li>
                     {% else %}
-                        <li><a href="?page={{page}}">{{ page }}</a></li>
+                        <li><a href="?{% change_params page=page %}">{{ page }}</a></li>
                     {% endif %}
                 {% endif %}
             {% endfor %}
             <li class="{% if not products.has_next %} disabled {% endif %}">
                 <a href="{% if products.has_next %}
-                    ?page={{products.next_page_number}}
+                    ?{% change_params page=products.next_page_number %}
                     {% else %}#
                 {% endif %}">Next</a>
             </li>

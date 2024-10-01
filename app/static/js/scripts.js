@@ -24,3 +24,15 @@ window.onclick = function(event) {
         event.target.style.display = 'none';
     }
 };
+
+const filterButton = document.getElementById('filterButton');
+const filterForm = document.getElementById('filterForm');
+
+// Toggle the filter form visibility when the filter button is clicked
+filterButton.addEventListener('click', function() {
+    if (filterForm.style.display === 'none' || filterForm.style.display === '') {
+        filterForm.style.display = 'block';
+    } else {
+        filterForm.style.display = 'none';
+    }
+});
