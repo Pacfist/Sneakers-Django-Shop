@@ -43,29 +43,36 @@
             </form>
         </div>
 
-    <div class="catalog-container">
-       {% for prod in products %}
-        <div class="catalog-item">
-            {% if prod.image %}
-                <img src="{{prod.image.url}}" alt="{{prod.name}}" class="sneaker-img">
-            {% else %}
-                <img src="{% static "images/notfound.jpg" %}" alt="Sneaker Not Found" class="sneaker-img-notfound">
-            {% endif %}
-            <a href="{% url 'product' prod.slug %}"><h2>{{prod.name}}</h2></a>
-            {% if prod.descount %}
-                <p class="price">
-                    <span class="original-price">{{prod.price}} CAD</span>
-                    <span class="discount-price">{{prod.sell_price}} CAD</span>
-                </p>
-                <span class="discount-label">{{prod.descount}}% OFF</span>
-            {% else %}
-                <p class="price">{{prod.price}} CAD</p>
-            {% endif %}
-            <p class="price">id:{{prod.display_id}}</p>
-            <button class="btn add-to-cart">Add to Cart</button>
-        </div>
-       {% endfor %}
-    </div>
+        {% if request.GET.q %}
+        <h3>The results for search "{{request.GET.q}}"</h3>
+        {% if not products %}
+        <h3>We could not find anything :( </h3>
+        {% endif %}
+        {% endif %}
+        <div class="catalog-container">
+            {% for prod in products %}
+             <div class="catalog-item">
+                 {% if prod.image %}
+                     <img src="{{prod.image.url}}" alt="{{prod.name}}" class="sneaker-img">
+                 {% else %}
+                     <img src="{% static 'images/notfound.jpg' %}" alt="Sneaker Not Found" class="sneaker-img-notfound">
+                 {% endif %}
+                 <a href="{% url 'product' prod.slug %}"><h2>{{prod.name}}</h2></a>
+                 {% if prod.descount %}
+                     <p class="price">
+                         <span class="original-price">{{prod.price|floatformat:2}} CAD</span>
+                         <span class="discount-price">{{prod.sell_price|floatformat:2}} CAD</span>
+                     </p>
+                     <span class="discount-label">{{prod.descount}}% OFF</span>
+                 {% else %}
+                     <p class="price">{{prod.price|floatformat:2}} CAD</p>
+                 {% endif %}
+                 <p class="price">id:{{prod.display_id}}</p>
+                 <button class="btn add-to-cart">Add to Cart</button>
+             </div>
+            {% endfor %}
+         </div>
+         
     
     <div class="pagination">
         

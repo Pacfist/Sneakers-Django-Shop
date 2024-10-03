@@ -21,7 +21,7 @@ def catalog(request, category_slug=None):
         products=Products.objects.filter(category__slug=category_slug)
         
     #Check box if the products on sale
-    if on_sale:
+    if on_sale: 
         products=products.filter(descount__gt=0)
 
     products = anotation(products)#Anotaion for low-to-high and high-to-low
