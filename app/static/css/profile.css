@@ -1,0 +1,103 @@
+/* General page styling */
+.body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Profile container */
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile header */
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #333;
+    margin-bottom: 15px;
+}
+
+.name {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.bio {
+    font-size: 1.2em;
+    color: #777;
+}
+
+/* Profile info section */
+.profile-info {
+    text-align: left;
+}
+
+.profile-info h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.profile-info p {
+    font-size: 1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Skills list */
+.skills-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.skills-list li {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+
+/* Social links */
+.social-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.social-links li {
+    margin-right: 10px;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: #333;
+    background-color: #e0e0e0;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.social-links a:hover {
+    background-color: #333;
+    color: white;
+}

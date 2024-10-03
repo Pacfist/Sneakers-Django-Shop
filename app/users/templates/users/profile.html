@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<div class="body">
+<div class="profile-container">
+    <div class="profile-header">
+        <img src="{% static "images/UntilThen.jpg" %}" alt="Profile Picture" class="profile-pic">
+        <h1 class="name">John Doe</h1>
+        <p class="bio">Web Developer, Tech Enthusiast, Lifelong Learner</p>
+    </div>
+
+    <div class="profile-info">
+        <h2>About Me</h2>
+        <p>
+            Hi, I'm John, a passionate web developer with over 5 years of experience in building and designing websites. I love to explore new technologies and continuously improve my skills. 
+        </p>
+
+        <h2>Skills</h2>
+        <ul class="skills-list">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>Python</li>
+            <li>Django</li>
+        </ul>
+
+    </div>
+</div>
+</div>
+{% endblock %}

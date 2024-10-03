@@ -17,8 +17,9 @@
             <li><a href="{% url 'index' %}">Home</a></li>
             <li><a href="{% url 'about' %}">Info</a></li>
             <li><a href="">Checking</a></li>
-            <li><a href="">Sign In</a></li>
-            <li><a href="">My Profile</a></li>
+            <li><a href="{% url 'login' %}">Sign In</a></li>
+            <li><a href="{% url 'logout' %}">Log Out</a></li>
+            <li><a href="{% url 'profile' %}">My Profile</a></li>
         </ul>
         <form role="search" action="{% url "search" %}" method="get">
             <div class="search-container">

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+<div class="auth-container">
+    <div class="auth-form">
+        <h2>Logout</h2>
+        <p>Are you sure you want to log out?</p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn">Yes, Logout</button>
+        </form>
+        <p><a href="{% url 'profile' %}">No, go back to profile</a></p>
+    </div>
+</div>
+{% endblock %}
