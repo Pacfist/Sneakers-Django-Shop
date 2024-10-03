@@ -20,10 +20,12 @@
             <li><a href="">Sign In</a></li>
             <li><a href="">My Profile</a></li>
         </ul>
-        <div class="search-container">
-            <input type="text" placeholder="Search...">
-            <button type="button">Search</button>
-        </div>
+        <form role="search" action="{% url "search" %}" method="get">
+            <div class="search-container">
+                <input type="search" placeholder="Search..." name="q">
+                <button type="submit">Search</button>
+            </div>
+        </form>
     </div>
 
      

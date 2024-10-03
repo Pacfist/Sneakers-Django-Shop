@@ -2,38 +2,36 @@ from django.shortcuts import render,get_object_or_404,get_list_or_404
 from goods.models import Categories, Products
 from django.core.paginator import Paginator
 from django.db.models import F, ExpressionWrapper, DecimalField
+from goods.utils import q_search,anotation
 
-def catalog(request, category_slug):
+def catalog(request, category_slug=None):
 
-    page = request.GET.get('page',1)
-    on_sale=request.GET.get('discount',None)
-    price_under_120=request.GET.get('price_under_120',None)
-    order_by=request.GET.get('sort',None)
+    page = request.GET.get('page',1)#GET request from page
+    on_sale=request.GET.get('discount',None)#GET request from is_onsale
+    price_under_120=request.GET.get('price_under_120',None)#GET request from price_under_120
+    order_by=request.GET.get('sort',None)#GET request from sort
+    query=request.GET.get('q', None)#GET request from q
     
-
+    #Showing the products by categories or by q 
     if category_slug=='all-items':
         products=Products.objects.all()
+    elif query:
+        products=q_search(query)
     else:
         products=Products.objects.filter(category__slug=category_slug)
         
-    print(on_sale)
+    #Check box if the products on sale
     if on_sale:
         products=products.filter(descount__gt=0)
 
-    
+    products = anotation(products)#Anotaion for low-to-high and high-to-low
 
-    products = products.annotate(
-        sell_price=ExpressionWrapper(
-            F('price') - F('price') * F('descount') / 100,
-            output_field=DecimalField(max_digits=10, decimal_places=2)
-        )
-    )
-
+    #Check box if the products price under 120
     if price_under_120:
         products=products.filter(sell_price__lt=120)
     
 
-    # Sort by sell_price
+    # Sort by sell_price or the newest
     if order_by == 'low-to-high':
         products = products.order_by('sell_price')
     elif order_by == 'high-to-low':
@@ -42,7 +40,7 @@ def catalog(request, category_slug):
         products = products.order_by('-id')
     
     
-    
+    #Pagination
     paginator=Paginator(products, 6)
     current_page=paginator.page(int(page))
 
@@ -51,6 +49,7 @@ def catalog(request, category_slug):
              'slug_url':category_slug,
              'curren_num_page':int(page),
              }
+    
     return render(request, 'goods/catalog.html',context)
 
 

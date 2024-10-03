@@ -11,11 +11,16 @@
     <button id="filterButton" class="btn filter-btn">Filter</button>
 
         <!-- Filter Form (hidden by default) -->
+        
         <div id="filterForm" class="filter-form">
-            <form  action="{% url 'catalog' slug_url %}" id="filterFormInner" method="get">
+             <!--SEARCH FORM -->
+            <form  action="{% if request.GET.q %}{% url "search" %}{% else %}{% url 'catalog' slug_url %}{% endif %}" id="filterFormInner" method="get">
                 <!-- Discount Checkbox -->
                 <div class="form-group">
                     <input type="checkbox" id="discount" name="discount" value="on"  {% if request.GET.discount == 'on' %}checked{% endif %}>
+                    {% if request.GET.q %}
+                        <input type="hidden" name="q" value="{{reuqest.GET.q}}">
+                    {% endif %}
                     <label for="discount">Show only discounted sneakers</label>
                     <hr>
                     <input type="checkbox" id="price_under_120" name="price_under_120" value="on"  {% if request.GET.price_under_120 == 'on' %}checked{% endif %}>
@@ -56,6 +61,7 @@
             {% else %}
                 <p class="price">{{prod.price}} CAD</p>
             {% endif %}
+            <p class="price">id:{{prod.display_id}}</p>
             <button class="btn add-to-cart">Add to Cart</button>
         </div>
        {% endfor %}
