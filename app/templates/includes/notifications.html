@@ -1,0 +1,104 @@
+{% if form.non_field_errors %}
+<label>{{form.non_field_errors}}</label>
+{% endif %}
+
+
+{% if messages %}
+<div class="messages-container">
+    {% for message in messages %}
+        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+            <span>{{ message }}</span>
+            <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+<style>
+    /* Message Container */
+    .messages-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    /* Base Style for Messages */
+    .message {
+        padding: 15px 20px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: 500;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0.9;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .message span {
+        flex: 1;
+    }
+    
+    /* Success Message */
+    .message.success {
+        background-color: #28a745;
+    }
+    
+    /* Error Message */
+    .message.error {
+        background-color: #dc3545;
+    }
+    
+    /* Info Message */
+    .message.info {
+        background-color: #007bff;
+    }
+    
+    /* Warning Message */
+    .message.warning {
+        background-color: #ffc107;
+        color: #333;
+    }
+    
+    /* Close Button */
+    .close-btn {
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+    
+    .close-btn:hover {
+        color: #fff;
+    }
+    
+    /* Animation for Messages */
+    .message.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    .message.hide {
+        opacity: 0;
+        transform: translateY(-20px);
+        display: none;
+    }
+    </style>
+    
+    <script>
+        // Auto-hide messages after 5 seconds
+        setTimeout(function() {
+            var messages = document.querySelectorAll('.message');
+            messages.forEach(function(message) {
+                message.classList.add('hide');
+            });
+        }, 5000);
+    </script>

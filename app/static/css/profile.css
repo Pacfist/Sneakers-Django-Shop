@@ -1,5 +1,5 @@
-/* General page styling */
-.body {
+/* General styling */
+body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -7,20 +7,24 @@
     color: #333;
 }
 
-/* Profile container */
 .profile-container {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Profile header */
 .profile-header {
     text-align: center;
     margin-bottom: 30px;
+}
+
+/* Profile picture at the top */
+.profile-pic-container {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .profile-pic {
@@ -28,76 +32,72 @@
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #333;
-    margin-bottom: 15px;
+    border: 3px solid #ddd;
+    margin-bottom: 20px;
 }
 
-.name {
-    font-size: 2em;
-    margin-bottom: 5px;
+.profile-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-.bio {
-    font-size: 1.2em;
-    color: #777;
-}
-
-/* Profile info section */
-.profile-info {
+.profile-form {
     text-align: left;
 }
 
-.profile-info h2 {
-    margin-top: 0;
-    border-bottom: 2px solid #333;
-    padding-bottom: 10px;
+.form-group {
     margin-bottom: 20px;
 }
 
-.profile-info p {
-    font-size: 1em;
-    line-height: 1.6;
-    margin-bottom: 20px;
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
 }
 
-/* Skills list */
-.skills-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
+.form-group input[type="text"],
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
 }
 
-.skills-list li {
-    background-color: #333;
+.form-group input[type="text"]:focus,
+.form-group input[type="file"]:focus {
+    outline: none;
+    border-color: #666;
+    background-color: #fff;
+}
+
+.submit-btn {
+    padding: 12px 20px;
+    background-color: #28a745;
     color: white;
-    padding: 10px 15px;
-    border-radius: 4px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 100%;
 }
 
-/* Social links */
-.social-links {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: 10px;
+.submit-btn:hover {
+    background-color: #218838;
 }
 
-.social-links li {
-    margin-right: 10px;
-}
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 20px;
+    }
 
-.social-links a {
-    text-decoration: none;
-    color: #333;
-    background-color: #e0e0e0;
-    padding: 10px 20px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.social-links a:hover {
-    background-color: #333;
-    color: white;
+    .profile-pic {
+        width: 120px;
+        height: 120px;
+    }
 }

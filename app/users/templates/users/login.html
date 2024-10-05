@@ -9,11 +9,20 @@
         <h2>Login</h2>
         <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
-            <label for="{{ form.username.id_for_label }}">Username</label>
-            {{form.username}}
+            {% include "includes/notifications.html" %}
+
+            <label for="id_username">Username</label>
+            <input type="text" 
+            id="id_username" 
+            name="username" 
+            required>
              
-            <label for="{{ form.password.id_for_label }}">Password</label>
-            {{form.password}}
+            <label for="id_password">Password</label>
+            <input type="password" 
+            id="id_password" 
+            name="password" 
+            required>
+            
             <button type="submit" class="btn">Login</button>
         </form>
         <p>Don't have an account? <a href="{% url 'registration' %}">Sign up here</a></p>

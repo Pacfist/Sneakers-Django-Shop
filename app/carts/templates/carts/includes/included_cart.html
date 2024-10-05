@@ -1,0 +1,41 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<div class="cart-container">
+    <h2 class="cart-title">Your Cart</h2>
+
+    <div class="cart-items">
+        <!-- Example item (can be dynamically generated using a template engine) -->
+        {% comment "" %}{% for item in cart.items %}{% endcomment %}
+        <div class="cart-item">
+            {% comment "" %}
+            <div class="cart-item-image">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+            </div>{% endcomment %}
+            <div class="cart-item-details">
+                <h4 class="cart-item-title">Air Max 90</h4>
+                <p class="cart-item-price">$140CAD</p>
+                <p class="cart-item-quantity">Quantity:1</p>
+            </div>
+            <div class="cart-item-actions">
+                <form method="post" action="{% url "cart_remove" 1 %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-remove">Remove</button>
+                </form>
+            </div>
+        </div>
+        {% comment "" %}
+        {% empty %}
+        <p class="empty-cart">Your cart is empty.</p>
+        {% endfor %}
+        {% endcomment %}
+    </div>
+
+    <div class="cart-summary">
+        <h3>Cart Summary</h3>
+        <p>Total Items: 1</p>
+        <p>Total Price: $140CAD</p>
+        <a href="#" class="btn-checkout">Proceed to Checkout</a>
+    </div>
+</div>
+
+

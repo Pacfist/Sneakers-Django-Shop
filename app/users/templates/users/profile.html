@@ -3,30 +3,37 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-<div class="body">
 <div class="profile-container">
     <div class="profile-header">
-        <img src="{% static "images/UntilThen.jpg" %}" alt="Profile Picture" class="profile-pic">
-        <h1 class="name">John Doe</h1>
-        <p class="bio">Web Developer, Tech Enthusiast, Lifelong Learner</p>
+
+        <!-- Profile Picture at the Top -->
+        <div class="profile-pic-container">
+            {% if user.image %}
+            <img src="{{ user.image.url }}" alt="Profile Picture" class="profile-pic">
+            {% else %}
+            <img src="{% static 'images/notfound.jpg' %}" alt="Profile Picture" class="profile-pic">
+            {% endif %}
+        </div>
+
+        <h1 class="profile-title">Edit Profile</h1>
+
+        <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data" class="profile-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                <input type="text" id="id_username" name="username" value="{{ user.username }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_image">Change Profile Picture</label>
+                <input type="file" id="id_image" name="image" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn submit-btn">Submit Changes</button>
+            </div>
+        </form>
     </div>
-
-    <div class="profile-info">
-        <h2>About Me</h2>
-        <p>
-            Hi, I'm John, a passionate web developer with over 5 years of experience in building and designing websites. I love to explore new technologies and continuously improve my skills. 
-        </p>
-
-        <h2>Skills</h2>
-        <ul class="skills-list">
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-            <li>Python</li>
-            <li>Django</li>
-        </ul>
-
-    </div>
-</div>
 </div>
 {% endblock %}

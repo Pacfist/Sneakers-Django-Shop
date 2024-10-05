@@ -12,15 +12,23 @@
     
 </head>
 <body>
+    {% include "includes/notifications.html" %}
     <div class="navbar">
         <ul>
             <li><a href="{% url 'index' %}">Home</a></li>
             <li><a href="{% url 'about' %}">Info</a></li>
-            <li><a href="">Checking</a></li>
-            <li><a href="{% url 'login' %}">Sign In</a></li>
+           
+            {% if  user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Log Out</a></li>
             <li><a href="{% url 'profile' %}">My Profile</a></li>
+            <li><a href="{% url 'user_cart' %}">Checking</a></li>
+            
+            {% else %}
+            <li><a href="{% url 'login' %}">Sign In</a></li>
+            {% endif %}
+            
         </ul>
+        
         <form role="search" action="{% url "search" %}" method="get">
             <div class="search-container">
                 <input type="search" placeholder="Search..." name="q">
@@ -29,7 +37,7 @@
         </form>
     </div>
 
-     
+    
     <div class="buttons">
         <button id="catalogButton" class="btn">
             <span>Catalog</span>
@@ -61,16 +69,10 @@
     </div>
 
     <div id="basketModal" class="modal">
-        <div class="modal-content">
+        
             <span class="close" onclick="closeModal('basketModal')">&times;</span>
-            <h2>Basket</h2>
-            <ul>
-                <li>Standard Sneaker</li>
-                <li>Sneaker Cleaner</li>
-                <li>Extra Laces</li>
-                <li>Sneaker Protector Spray</li>
-            </ul>
-        </div>
+            {% include "carts/includes/included_cart.html" %}
+        
     </div>
 
     <script src="{% static 'js/scripts.js' %}"></script>
