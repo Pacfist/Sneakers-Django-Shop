@@ -1,20 +1,23 @@
 {% load static %}
+{% load carts_tags %}
+
+{% user_carts request as cart %}
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
 <div class="cart-container">
-    <h2 class="cart-title">Your Cart</h2>
+    <h2 class="cart-title">Cart</h2>
 
     <div class="cart-items">
-        <!-- Example item (can be dynamically generated using a template engine) -->
-        {% comment "" %}{% for item in cart.items %}{% endcomment %}
+        {% if cart %}
+        {% for item in cart %}
         <div class="cart-item">
-            {% comment "" %}
+            
             <div class="cart-item-image">
                 <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-            </div>{% endcomment %}
+            </div>
             <div class="cart-item-details">
-                <h4 class="cart-item-title">Air Max 90</h4>
-                <p class="cart-item-price">$140CAD</p>
-                <p class="cart-item-quantity">Quantity:1</p>
+                <h4 class="cart-item-title">{{item.product.name}}</h4>
+                <p class="cart-item-price">{{item.products_price}}CAD</p>
+                <p class="cart-item-quantity">{{item.quantity}}</p>
             </div>
             <div class="cart-item-actions">
                 <form method="post" action="{% url "cart_remove" 1 %}">
@@ -23,19 +26,27 @@
                 </form>
             </div>
         </div>
+        {% endfor %}
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <p>Total Items: {{cart.total_quantity}}</p>
+            <p>Total Price: {{cart.total_price}}CAD</p>
+            <a href="#" class="btn-checkout">Proceed to Checkout</a>
+        </div>
+        {% else %}
+        <div class="cart-summary">
+            <p class="empty-cart">Your cart is empty.</p>
+        </div>
+        {% endif %}
+        
         {% comment "" %}
         {% empty %}
-        <p class="empty-cart">Your cart is empty.</p>
-        {% endfor %}
+        
+       
         {% endcomment %}
     </div>
 
-    <div class="cart-summary">
-        <h3>Cart Summary</h3>
-        <p>Total Items: 1</p>
-        <p>Total Price: $140CAD</p>
-        <a href="#" class="btn-checkout">Proceed to Checkout</a>
-    </div>
+    
 </div>
 
 

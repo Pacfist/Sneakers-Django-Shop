@@ -1,5 +1,8 @@
 {% load goods_tags %}
 {% load static %}
+{% load carts_tags %}
+
+{% user_carts request as cart %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +47,7 @@
             <img src="{% static 'images/category.png' %}" alt="Category Icon" class="btn-icon">
         </button>
         <button id="basketButton" class="btn">
-            <span>Basket</span>
+            <span>Basket {% if cart.total_quantity %}{{cart.total_quantity}}{% endif %}</span>
             <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon" class="btn-icon">
         </button>
     </div>

@@ -3,6 +3,7 @@ from users.forms import ProfileUser,UserLoginForm,UserRegistrationForm
 from django.contrib import auth,messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from carts.models import Cart
 
 def login(request):#login for user
     if request.method == 'POST':
@@ -71,6 +72,8 @@ def logout(request):
     return redirect(reverse('index'))
 
 
+@login_required   
 def user_cart(request):
-    return render(request, 'users/users_cart.html')
-    
+     
+
+    return render(request, 'users/users_cart.html',context)

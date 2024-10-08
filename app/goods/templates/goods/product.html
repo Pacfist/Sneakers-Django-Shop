@@ -24,7 +24,7 @@
         {% endif %}
 
         <p class="product-description">{{ product.description }}</p>
-        <button class="btn add-to-cart">Add to Cart</button>
+        <button class="btn add-to-cart"><a href="{% url "cart_add" product.slug %}">Add to Cart</a></button>
     </div>
 </div>
 {% endblock %}
