@@ -15,7 +15,9 @@
     
 </head>
 <body>
-    {% include "includes/notifications.html" %}
+    <div class="messages-container">
+        {% include "includes/notifications.html" %}
+    </div>
     <div class="navbar">
         <ul>
             <li><a href="{% url 'index' %}">Home</a></li>
@@ -38,6 +40,11 @@
                 <button type="submit">Search</button>
             </div>
         </form>
+
+         
+
+            
+
     </div>
 
     
@@ -47,8 +54,10 @@
             <img src="{% static 'images/category.png' %}" alt="Category Icon" class="btn-icon">
         </button>
         <button id="basketButton" class="btn">
-            <span>Basket {% if cart.total_quantity %}{{cart.total_quantity}}{% endif %}</span>
             <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon" class="btn-icon">
+            <sapn>Basket</span>
+            <span id="goods-in-cart-count"> {% if cart.total_quantity %}{{cart.total_quantity}}{% endif %}</span>
+            
         </button>
     </div>
 
@@ -74,7 +83,9 @@
     <div id="basketModal" class="modal">
         
             <span class="close" onclick="closeModal('basketModal')">&times;</span>
-            {% include "carts/includes/included_cart.html" %}
+            <div id="cart-section">
+                {% include "carts/includes/included_cart.html" %}
+            </div>
         
     </div>
 

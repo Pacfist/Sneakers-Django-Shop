@@ -70,7 +70,7 @@
     margin-top: 10px;
 }
 
-.btn.add-to-cart {
+.btn.add-cart {
     background-color: #2ecc71;
     color: white;
     padding: 10px 20px;
@@ -81,7 +81,7 @@
     transition: background-color 0.3s;
 }
 
-.btn.add-to-cart:hover {
+.btn.add-cart:hover {
     background-color: #27ae60;
 }
 

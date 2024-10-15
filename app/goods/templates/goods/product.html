@@ -24,7 +24,42 @@
         {% endif %}
 
         <p class="product-description">{{ product.description }}</p>
-        <button class="btn add-to-cart"><a href="{% url "cart_add" product.slug %}">Add to Cart</a></button>
+        <button class="btn add-cart" type="button" value="{{product.id}}" id="add-cart"> {% csrf_token %} Add to Cart</button>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on('click', '#add-cart', function(e) {
+            e.preventDefault();
+            const productId = $(this).val();  // Get product ID from clicked button
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart_add" %}',
+                data: {
+                    product_id: productId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function(json) {
+                    // Update the total cart quantity displayed in the header or wherever the quantity is shown
+                    document.getElementById("goods-in-cart-count").textContent = json.qty;
+    
+                    // Update the cart HTML section with the newly rendered cart_items_html
+                    $('#cart-section').html(json.cart_items_html);
+    
+                    // Inject the new messages into the notification area and display them
+                    $('.messages-container').html(json.messages_html);
+    
+                    // Automatically hide messages after 5 seconds
+                    setTimeout(function() {
+                        $('.message').fadeOut('slow');
+                    }, 5000);
+                },
+                error: function(xhr, errmsg, err) {
+                    console.error(errmsg);
+                }
+            });
+        });
+    </script>
 {% endblock %}

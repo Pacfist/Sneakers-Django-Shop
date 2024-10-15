@@ -20,16 +20,15 @@
                 <p class="cart-item-quantity">{{item.quantity}}</p>
             </div>
             <div class="cart-item-actions">
-                <form method="post" action="{% url "cart_remove" 1 %}">
-                    {% csrf_token %}
+                <a href="{% url "cart_remove" item.id %}">
                     <button type="submit" class="btn-remove">Remove</button>
-                </form>
+                </a>
             </div>
         </div>
         {% endfor %}
         <div class="cart-summary">
             <h3>Cart Summary</h3>
-            <p>Total Items: {{cart.total_quantity}}</p>
+            <p id="total_qty">Total Items: {{cart.total_quantity}}</p>
             <p>Total Price: {{cart.total_price}}CAD</p>
             <a href="#" class="btn-checkout">Proceed to Checkout</a>
         </div>

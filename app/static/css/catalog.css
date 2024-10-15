@@ -88,7 +88,7 @@
 }
 
 /* Add to Cart Button */
-.add-to-cart {
+.add-cart {
     background-color: #008CBA;
     color: #fff;
     border: none;
@@ -107,13 +107,13 @@
     max-width: 200px;
 }
 
-.add-to-cart:hover {
+.add-cart:hover {
     background-color: #005f7f;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 
-.add-to-cart:active {
+.add--cart:active {
     background-color: #004a63;
     transform: translateY(0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);

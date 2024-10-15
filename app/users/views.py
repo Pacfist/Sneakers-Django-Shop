@@ -76,4 +76,4 @@ def logout(request):
 def user_cart(request):
      
 
-    return render(request, 'users/users_cart.html',context)
+    return render(request, 'users/users_cart.html')
