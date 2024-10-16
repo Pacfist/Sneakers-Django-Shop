@@ -6,7 +6,12 @@ body {
     margin: 0;
     padding: 0;
 }
-
+.together{
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0; /* Navbar will stick to the top of the viewport */
+    z-index: 1000; /* Ensure it stays on top of other content */
+}
 /* Navbar Styles */
 .navbar {
     background-color: #333;
@@ -69,6 +74,7 @@ body {
 /* Buttons */
 /* Button Container */
 .buttons {
+    
     display: flex;
     justify-content: center;
     gap: 20px; /* Space between buttons */

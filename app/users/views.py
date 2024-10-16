@@ -74,6 +74,4 @@ def logout(request):
 
 @login_required   
 def user_cart(request):
-     
-
     return render(request, 'users/users_cart.html')

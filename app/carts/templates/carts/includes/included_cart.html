@@ -16,20 +16,24 @@
             </div>
             <div class="cart-item-details">
                 <h4 class="cart-item-title">{{item.product.name}}</h4>
-                <p class="cart-item-price">{{item.products_price}}CAD</p>
-                <p class="cart-item-quantity">{{item.quantity}}</p>
+                <p class="cart-item-price">{{item.products_price}} CAD</p>
+                
+                <!-- Quantity controls -->
+                <div class="quantity-controls">
+                    <button class="quantity-btn minus-btn" data-id="{{ item.id }}">-</button>
+                    <span class="quantity-display">{{ item.quantity }}</span>
+                    <button class="quantity-btn plus-btn" data-id="{{ item.id }}">+</button>
+                </div>
             </div>
             <div class="cart-item-actions">
-                <a href="{% url "cart_remove" item.id %}">
-                    <button type="submit" class="btn-remove">Remove</button>
-                </a>
+                <button type="button" class="btn-remove" id="btn-remove" value="{{item.id}}">{% csrf_token %}Remove</button>
             </div>
         </div>
         {% endfor %}
         <div class="cart-summary">
             <h3>Cart Summary</h3>
             <p id="total_qty">Total Items: {{cart.total_quantity}}</p>
-            <p>Total Price: {{cart.total_price}}CAD</p>
+            <p>Total Price: {{cart.total_price}} CAD</p>
             <a href="#" class="btn-checkout">Proceed to Checkout</a>
         </div>
         {% else %}
@@ -37,15 +41,43 @@
             <p class="empty-cart">Your cart is empty.</p>
         </div>
         {% endif %}
-        
-        {% comment "" %}
-        {% empty %}
-        
-       
-        {% endcomment %}
     </div>
-
-    
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).on('click', '#btn-remove', function(e) {
+        e.preventDefault();
+        const productId = $(this).val();  // Get product ID from clicked button
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_remove" %}',
+            data: {
+                product_id: productId,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json) {
+                console.log(json.qty);
+                // Update the total cart quantity displayed in the header or wherever the quantity is shown
+                document.getElementById("goods-in-cart-count").textContent = json.qty;
+
+                // Update the cart HTML section with the newly rendered cart_items_html
+                $('#cart-section').html(json.cart_items_html);
+
+                // Inject the new messages into the notification area and display them
+                $('.messages-container').html(json.messages_html);
+
+                // Automatically hide messages after 5 seconds
+                setTimeout(function() {
+                    $('.message').fadeOut('slow');
+                }, 5000);
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(0)
+                console.error(errmsg);
+            }
+        });
+    });
+</script>
 
 

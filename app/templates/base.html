@@ -15,9 +15,11 @@
     
 </head>
 <body>
-    <div class="messages-container">
-        {% include "includes/notifications.html" %}
-    </div>
+    
+    <div class="together">
+        <div class="messages-container">
+            {% include "includes/notifications.html" %}
+        </div>
     <div class="navbar">
         <ul>
             <li><a href="{% url 'index' %}">Home</a></li>
@@ -41,25 +43,27 @@
             </div>
         </form>
 
-         
+        <div class="buttons">
+            <button id="catalogButton" class="btn">
+                <span>Catalog</span>
+                <img src="{% static 'images/category.png' %}" alt="Category Icon" class="btn-icon">
+            </button>
+            <button id="basketButton" class="btn">
+                <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon" class="btn-icon">
+                <sapn>Basket</span>
+                <span id="goods-in-cart-count"> {% if cart.total_quantity %}{{cart.total_quantity}}{% endif %}</span>
+                
+            </button>
+        </div>
 
             
 
     </div>
 
     
-    <div class="buttons">
-        <button id="catalogButton" class="btn">
-            <span>Catalog</span>
-            <img src="{% static 'images/category.png' %}" alt="Category Icon" class="btn-icon">
-        </button>
-        <button id="basketButton" class="btn">
-            <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon" class="btn-icon">
-            <sapn>Basket</span>
-            <span id="goods-in-cart-count"> {% if cart.total_quantity %}{{cart.total_quantity}}{% endif %}</span>
-            
-        </button>
-    </div>
+    
+
+</div>
 
     <!-- Main content area -->
     <div class="main-content">
@@ -88,7 +92,7 @@
             </div>
         
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>
