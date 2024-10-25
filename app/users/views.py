@@ -11,10 +11,13 @@ def login(request):#login for user
         if form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
+            session_key=request.session.session_key
             user = auth.authenticate(username=username,password=password)#authenticate user
             if user:
                 auth.login(request,user)
                 messages.success(request, f"{username}, entered in the account")
+                if session_key:
+                    Cart.objects.filter(session_key=session_key).update(user=user)
                 return HttpResponseRedirect(reverse('profile'))
     else:
         form = UserLoginForm()
@@ -33,7 +36,10 @@ def registration(request):#registration for user
         if form.is_valid():
             form.save()
             user=form.instance
+            session_key=request.session.session_key
             auth.login(request, user)
+            if session_key:
+                    Cart.objects.filter(session_key=session_key).update(user=user)
             messages.success(request, f"{user.username}, created in the account")
             return HttpResponseRedirect(reverse('profile'))
     else:

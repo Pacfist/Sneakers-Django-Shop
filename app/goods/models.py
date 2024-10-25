@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse 
 class Categories(models.Model):
     name=models.CharField(max_length=50, unique=True)
     slug=models.SlugField(max_length=200, blank=True, unique=True, null=True)
@@ -24,6 +24,11 @@ class Products(models.Model):
     def __str__(self):
         return self.name
     
+
+    def get_absolute_url(self):
+        return reverse("product", kwargs={"product_slug": self.slug})
+
+
     def display_id(self):
         return f"{self.id:05}"
     

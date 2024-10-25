@@ -8,3 +8,8 @@ class CaregoriesAdmin(admin.ModelAdmin):
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
     prepopulated_fields={'slug':('name',)}
+    list_display=['name', 'quantity', 'price', 'descount']
+    list_editable=['descount']
+    search_fields=['name']
+    list_filter=['descount', 'category']
+

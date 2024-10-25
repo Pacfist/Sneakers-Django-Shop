@@ -21,19 +21,33 @@ def cart_add(request):
         
         product = get_object_or_404(Products, id=product_id)
 
-        # Check if the product is already in the cart
-        cart, created = Cart.objects.get_or_create(user=request.user, product=product)
+        if request.user.is_authenticated:
+            cart, created = Cart.objects.get_or_create(user=request.user, product=product)
 
-        if created:
+            if created:
             # Set initial quantity to 1 when the item is newly added
-            cart.quantity = 1
-            messages.success(request, f"{product.name} was added to your cart.")
-        else:
+                cart.quantity = 1
+                messages.success(request, f"{product.name} was added to your cart.")
+            else:
             # If the product is already in the cart, increment the quantity
-            cart.quantity += 1
-            messages.success(request, f"Updated {product.name} quantity in your cart.")
+                cart.quantity += 1
+                messages.success(request, f"Updated {product.name} quantity in your cart.")
 
-        cart.save()
+            cart.save()
+        else:
+            carts = Cart.objects.filter(
+                session_key=request.session.session_key,product=product
+            )
+            print(carts)
+            if carts.exists():
+                cart=carts.first()
+                if cart:
+                    cart.quantity+=1
+                    cart.save()
+            else:
+                Cart.objects.create(
+                     session_key=request.session.session_key,product=product,quantity=1
+                )
 
         # Get the updated cart total quantity
         total_quantity = Cart.objects.filter(user=request.user).total_quantity()
@@ -76,32 +90,41 @@ def cart_remove(request):
     #cart = get_object_or_404(Cart, id=cart_id)
     #cart.delete()
     #return redirect(request.META['HTTP_REFERER'])
-    product_id = int(request.POST.get('product_id'))
+
+
+    print("_________CART_REMOVE_______")
     
-    cart = get_object_or_404(Cart, id=product_id)
-    print(cart)
+    if request.POST.get('action') == 'post':
+        print("_________ACTION=POST_______")
+        product_id = int(request.POST.get('product_id'))
+        print("___________________PRODUCT_ID=",product_id,"__________________")
+        
+        cart = get_object_or_404(Cart, id=product_id)
+        print("___________________CART=",cart,"__________________")
+
         # Check if the product is already in the cart
-    cart.delete()
+        cart.delete()
 
         # Get the updated cart total quantity
-    total_quantity = Cart.objects.filter(user=request.user).total_quantity()
+        total_quantity = Cart.objects.filter(user=request.user).total_quantity()
 
         # Render the updated cart HTML
-    user_cart = get_user_carts(request)
-    cart_items_html = render_to_string(
-        "carts/includes/included_cart.html",
-        {"carts": user_cart},
-        request=request
-    )
+        user_cart = get_user_carts(request)
+        cart_items_html = render_to_string(
+            "carts/includes/included_cart.html",
+            {"carts": user_cart},
+            request=request
+        )
 
         # Render the messages HTML
-    messages_html = render_to_string('includes/notifications.html', {}, request=request)
+        messages_html = render_to_string('includes/notifications.html', {}, request=request)
 
         # Return the response data, including the total quantity, cart HTML, and messages HTML
-    response_data = {
-        "cart_items_html": cart_items_html,
-        "qty": total_quantity,
-        "messages_html": messages_html,  # Include the rendered messages
-    }
+        response_data = {
+            "cart_items_html": cart_items_html,
+            "qty": total_quantity,
+            "messages_html": messages_html,  # Include the rendered messages
+        }
+        print("_________JSON_RESPONSE_______")
 
-    return JsonResponse(response_data)
+        return JsonResponse(response_data)

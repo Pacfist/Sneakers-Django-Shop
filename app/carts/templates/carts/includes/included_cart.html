@@ -2,12 +2,15 @@
 {% load carts_tags %}
 
 {% user_carts request as cart %}
+
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
 <div class="cart-container">
     <h2 class="cart-title">Cart</h2>
 
     <div class="cart-items">
+        {{cart.name}}
         {% if cart %}
+        
         {% for item in cart %}
         <div class="cart-item">
             
@@ -20,7 +23,7 @@
                 
                 <!-- Quantity controls -->
                 <div class="quantity-controls">
-                    <button class="quantity-btn minus-btn" data-id="{{ item.id }}">-</button>
+                    <button class="quantity-btn minus-btn" id="minus-btn" value={{item.id}}>-</button>
                     <span class="quantity-display">{{ item.quantity }}</span>
                     <button class="quantity-btn plus-btn" data-id="{{ item.id }}">+</button>
                 </div>
@@ -45,9 +48,11 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).on('click', '#btn-remove', function(e) {
+    // Use class selector to avoid duplicate IDs
+    $(document).on('click', '.btn-remove', function(e) {
         e.preventDefault();
         const productId = $(this).val();  // Get product ID from clicked button
+
         $.ajax({
             type: 'POST',
             url: '{% url "cart_remove" %}',
@@ -73,11 +78,11 @@
                 }, 5000);
             },
             error: function(xhr, errmsg, err) {
-                console.log(0)
                 console.error(errmsg);
             }
         });
     });
 </script>
+
 
 
