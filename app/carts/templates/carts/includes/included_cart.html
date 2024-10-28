@@ -37,7 +37,9 @@
             <h3>Cart Summary</h3>
             <p id="total_qty">Total Items: {{cart.total_quantity}}</p>
             <p>Total Price: {{cart.total_price}} CAD</p>
-            <a href="#" class="btn-checkout">Proceed to Checkout</a>
+            {% if show_checkout_button %}
+                    <a href="{% url 'order:create_order' %}" class="btn-checkout">Proceed to Checkout</a>
+            {% endif %}
         </div>
         {% else %}
         <div class="cart-summary">

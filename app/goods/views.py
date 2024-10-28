@@ -48,6 +48,7 @@ def catalog(request, category_slug=None):
              'products':current_page,
              'slug_url':category_slug,
              'curren_num_page':int(page),
+             "show_checkout_button":True,
              }
     
     return render(request, 'goods/catalog.html',context)

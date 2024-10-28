@@ -80,4 +80,4 @@ def logout(request):
 
 @login_required   
 def user_cart(request):
-    return render(request, 'users/users_cart.html')
+    return render(request, 'users/users_cart.html', {"show_checkout_button":True})
