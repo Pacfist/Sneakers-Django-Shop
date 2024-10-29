@@ -26,12 +26,12 @@
             <li><a href="{% url 'about' %}">Info</a></li>
            
             {% if  user.is_authenticated %}
-            <li><a href="{% url 'logout' %}">Log Out</a></li>
-            <li><a href="{% url 'profile' %}">My Profile</a></li>
-            <li><a href="{% url 'user_cart' %}">Checking</a></li>
+            <li><a href="{% url 'user:logout' %}">Log Out</a></li>
+            <li><a href="{% url 'user:profile' %}">My Profile</a></li>
+            <li><a href="{% url 'user:user_cart' %}">Checking</a></li>
             
             {% else %}
-            <li><a href="{% url 'login' %}">Sign In</a></li>
+            <li><a href="{% url 'user:login' %}">Sign In</a></li>
             {% endif %}
             
         </ul>

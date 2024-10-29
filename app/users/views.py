@@ -18,7 +18,7 @@ def login(request):#login for user
                 messages.success(request, f"{username}, entered in the account")
                 if session_key:
                     Cart.objects.filter(session_key=session_key).update(user=user)
-                return HttpResponseRedirect(reverse('profile'))
+                return HttpResponseRedirect(reverse('user:profile'))
     else:
         form = UserLoginForm()
     context={
@@ -41,7 +41,7 @@ def registration(request):#registration for user
             if session_key:
                     Cart.objects.filter(session_key=session_key).update(user=user)
             messages.success(request, f"{user.username}, created in the account")
-            return HttpResponseRedirect(reverse('profile'))
+            return HttpResponseRedirect(reverse('user:profile'))
     else:
         form = UserRegistrationForm()
 
@@ -59,7 +59,7 @@ def profile(request):
             print(request.FILES)
             form.save()
             messages.success(request, "Profiled was updated!")
-            return redirect(reverse('profile'))
+            return redirect(reverse('user:profile'))
         
     else:
         form = ProfileUser(instance=request.user)

@@ -17,7 +17,7 @@
 
         <h1 class="profile-title">Edit Profile</h1>
 
-        <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data" class="profile-form">
+        <form action="{% url 'user:profile' %}" method="post" enctype="multipart/form-data" class="profile-form">
             {% csrf_token %}
             
             <div class="form-group">
