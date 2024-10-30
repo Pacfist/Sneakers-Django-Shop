@@ -71,7 +71,10 @@
                      <p class="price">{{product.price|floatformat:2}} CAD</p>
                  {% endif %}
                  <p class="price">id:{{product.display_id}}</p>
-                 {{product.id}}
+                 
+                 {% if product.quantity <= 10 %}
+                 <p class="discount-price" >Only {{product.quantity}} left</p>
+                 {% endif %}
                  
                  
                  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">

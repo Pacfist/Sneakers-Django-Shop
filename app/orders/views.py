@@ -7,13 +7,10 @@ from django.forms import ValidationError
 from django.contrib import messages
 
 def create_order(request):
-    print(1111111111)
     if request.method == 'POST':
-        print(2222222222)
         form = CreateOrderForm(data=request.POST)
-        print(55555555)
+        print(request.POST)
         if form.is_valid():
-            print(55555555)
             try:
                 with transaction.atomic():
                     user = request.user
@@ -71,5 +68,5 @@ def create_order(request):
              }
         form = CreateOrderForm(initial=initial)
 
-    context = {"form": form, "show_checkout_button": False}
+    context = {"form": form, "show_checkout_button": True}
     return render(request, 'orders/create_order.html', context)
