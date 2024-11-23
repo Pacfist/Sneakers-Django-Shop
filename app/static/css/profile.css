@@ -90,6 +90,73 @@ body {
     background-color: #218838;
 }
 
+.orders-section {
+    margin-top: 20px;
+}
+
+.order-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.order-header h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.order-header p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.order-items {
+    margin-top: 15px;
+}
+
+.order-items h4 {
+    font-size: 1.1em;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.order-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-left: 3px solid #4CAF50;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.order-item p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+
+
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
     .profile-container {

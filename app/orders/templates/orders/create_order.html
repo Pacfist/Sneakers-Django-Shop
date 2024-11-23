@@ -18,25 +18,25 @@
         <!-- Personal Information Section -->
         <div class="order-section">
             <h3>Personal Information</h3>
-            <div class="form-group">
+            <div class="form-group {% if form.full_name.errors %}error{% endif %}">
                 <label for="full_name">Full Name:</label>
                 <input type="text" id="full_name" name="full_name" value="{{ form.full_name.value|default:'' }}" required>
                 {% if form.full_name.errors %}
-                    <div class="error">Mistake: {{ form.full_name.errors.0 }}</div>
+                    <div class="error-message">{{ form.full_name.errors.0 }}</div>
                 {% endif %}
             </div>
-            <div class="form-group">
+            <div class="form-group {% if form.email.errors %}error{% endif %}">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" value="{{ form.email.value|default:'' }}" required>
                 {% if form.email.errors %}
-                    <div class="error">Mistake: {{ form.email.errors.0 }}</div>
+                    <div class="error-message">{{ form.email.errors.0 }}</div>
                 {% endif %}
             </div>
-            <div class="form-group">
+            <div class="form-group {% if form.phone_number.errors %}error{% endif %}">
                 <label for="phone_number">Phone Number:</label>
                 <input type="tel" id="phone_number" name="phone_number" value="{{ form.phone_number.value|default:'' }}" required>
                 {% if form.phone_number.errors %}
-                    <div class="error">Mistake: {{ form.phone_number.errors.0 }}</div>
+                    <div class="error-message">{{ form.phone_number.errors.0 }}</div>
                 {% endif %}
             </div>
         </div>
@@ -44,32 +44,32 @@
         <!-- Shipping Information Section -->
         <div class="order-section">
             <h3>Shipping Information</h3>
-            <div class="form-group">
+            <div class="form-group {% if form.delivery_address.errors %}error{% endif %}">
                 <label for="delivery_address">Address:</label>
                 <input type="text" id="delivery_address" name="delivery_address" value="{{ form.delivery_address.value|default:'' }}" required>
                 {% if form.delivery_address.errors %}
-                    <div class="error">Mistake: {{ form.delivery_address.errors.0 }}</div>
+                    <div class="error-message">{{ form.delivery_address.errors.0 }}</div>
                 {% endif %}
             </div>
-            <div class="form-group">
+            <div class="form-group {% if form.city.errors %}error{% endif %}">
                 <label for="city">City:</label>
                 <input type="text" id="city" name="city" value="{{ form.city.value|default:'' }}" required>
                 {% if form.city.errors %}
-                    <div class="error">Mistake: {{ form.city.errors.0 }}</div>
+                    <div class="error-message">{{ form.city.errors.0 }}</div>
                 {% endif %}
             </div>
-            <div class="form-group">
+            <div class="form-group {% if form.postal_code.errors %}error{% endif %}">
                 <label for="postal_code">Postal Code:</label>
                 <input type="text" id="postal_code" name="postal_code" value="{{ form.postal_code.value|default:'' }}" required>
                 {% if form.postal_code.errors %}
-                    <div class="error">Mistake: {{ form.postal_code.errors.0 }}</div>
+                    <div class="error-message">{{ form.postal_code.errors.0 }}</div>
                 {% endif %}
             </div>
-            <div class="form-group">
+            <div class="form-group {% if form.country.errors %}error{% endif %}">
                 <label for="country">Country:</label>
                 <input type="text" id="country" name="country" value="{{ form.country.value|default:'' }}" required>
                 {% if form.country.errors %}
-                    <div class="error">Mistake: {{ form.country.errors.0 }}</div>
+                    <div class="error-message">{{ form.country.errors.0 }}</div>
                 {% endif %}
             </div>
         </div>

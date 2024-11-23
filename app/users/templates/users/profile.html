@@ -3,15 +3,15 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
 <div class="profile-container">
     <div class="profile-header">
-
         <!-- Profile Picture at the Top -->
         <div class="profile-pic-container">
             {% if user.image %}
-            <img src="{{ user.image.url }}" alt="Profile Picture" class="profile-pic">
+                <img src="{{ user.image.url }}" alt="Profile Picture" class="profile-pic">
             {% else %}
-            <img src="{% static 'images/notfound.jpg' %}" alt="Profile Picture" class="profile-pic">
+                <img src="{% static 'images/notfound.jpg' %}" alt="Profile Picture" class="profile-pic">
             {% endif %}
         </div>
 
@@ -34,6 +34,32 @@
                 <button type="submit" class="btn submit-btn">Submit Changes</button>
             </div>
         </form>
+
+        <!-- Orders Section -->
+        <div class="orders-section">
+            <h2>Your Orders</h2>
+            {% for order in orders %}
+                <div class="order-card">
+                    <div class="order-header">
+                        <h3>Order #{{ order.id }}</h3>
+                        <p><strong>Delivery Address:</strong> {{ order.delivery_address }}</p>
+                        <p><strong>Status:</strong> {{ order.status }}</p>
+                    </div>
+                    <div class="order-items">
+                        <h4>Items in this order:</h4>
+                        {% for item in order.orderitem_set.all %}
+                            <div class="order-item">
+                                <p><strong>Product:</strong> {{ item.product }}</p>
+                                <p><strong>Price:</strong> ${{ item.price }}</p>
+                                <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% empty %}
+                <p>No orders found.</p>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

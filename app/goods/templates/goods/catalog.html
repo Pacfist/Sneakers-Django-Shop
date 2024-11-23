@@ -56,7 +56,7 @@
             {% for product in products %}
              <div class="catalog-item">
                  {% if product.image %}
-                     <img src="{{product.image.url}}" alt="{{product.name}}" class="sneaker-img">
+                 <a href="{% url 'product' product.slug %}"><img src="{{product.image.url}}" alt="{{product.name}}" class="sneaker-img"></a>
                  {% else %}
                      <img src="{% static 'images/notfound.jpg' %}" alt="Sneaker Not Found" class="sneaker-img-notfound">
                  {% endif %}
@@ -90,16 +90,16 @@
         <ul>
             
             <li><a href="?page={{1}}">First</a></li>
-            <li class="{% if not products.has_previous %} disabled {% endif %}">
-                <a href="{% if products.has_previous %}
-                    ?{% change_params page=products.previous_page_number %}
+            <li class="{% if not page_obj.has_previous %} disabled {% endif %}">
+                <a href="{% if page_obj.has_previous %}
+                    ?{% change_params page=page_obj.previous_page_number %}
                     {% else %}#
                 {% endif %}">Previous</a>
             </li>
 
 
-            {% for page in products.paginator.page_range %}
-               {% if page >= products.number|add:-2 and page <= products.number|add:2 %}
+            {% for page in page_obj.paginator.page_range %}
+               {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
                     {% if curren_num_page == page %}
                         <li ><a href="?{% change_params page=page %}" class='on_num_pagination'>{{ page }}</a></li>
                     {% else %}
@@ -107,9 +107,9 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
-            <li class="{% if not products.has_next %} disabled {% endif %}">
-                <a href="{% if products.has_next %}
-                    ?{% change_params page=products.next_page_number %}
+            <li class="{% if not page_obj.has_next %} disabled {% endif %}">
+                <a href="{% if page_obj.has_next %}
+                    ?{% change_params page=page_obj.next_page_number %}
                     {% else %}#
                 {% endif %}">Next</a>
             </li>

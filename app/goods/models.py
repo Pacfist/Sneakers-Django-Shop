@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse 
+
 class Categories(models.Model):
     name=models.CharField(max_length=50, unique=True)
     slug=models.SlugField(max_length=200, blank=True, unique=True, null=True)
@@ -36,7 +37,10 @@ class Products(models.Model):
         if self.descount:
             return round(self.price - self.price*self.descount/100,2)
         return self.price
-
+    
+#class Sizes(models.Model):
+    #name = models.CharField(max_length=50, unique=True)
+    
 
 
 

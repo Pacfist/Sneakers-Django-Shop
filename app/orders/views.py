@@ -62,11 +62,16 @@ def create_order(request):
     else:
         print(333333333333333333)
         # Set initial data with `full_name`
-        initial = {
-             'first_name': request.user.first_name,
-             'last_name': request.user.last_name,
-             }
-        form = CreateOrderForm(initial=initial)
+        try:
+            initial = {
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                }
+            form = CreateOrderForm(initial=initial)
+        except:
+            #messages.success("You should login first")
+            return redirect('user:login')
+
 
     context = {"form": form, "show_checkout_button": True}
     return render(request, 'orders/create_order.html', context)
