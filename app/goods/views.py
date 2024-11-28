@@ -1,10 +1,12 @@
 from django.shortcuts import render,get_object_or_404
-from goods.models import Categories, Products
+from goods.models import Categories, Products, ProductSizeQuantity
+from carts.models import Comments
+from orders.models import OrderItem
 from django.core.paginator import Paginator
 from goods.utils import q_search,anotation
 from django.http import Http404
 from django.views.generic import DetailView, ListView 
-
+from django.views import View
 # def catalog(request, category_slug=None):
 
 #     page=request.GET.get('page',1)#GET request from page
@@ -60,11 +62,17 @@ class CatalogView(ListView):
     def get_queryset(self):
          
         category_slug = self.kwargs.get("category_slug")
-        query = self.kwargs.get("q")
-        on_sale = self.kwargs.get("on_sale")
-        order_by = self.kwargs.get("order_by")
-        price_under_120 = self.kwargs.get("price_under_120")
-        
+        query = self.request.GET.get("q")  # Query parameters are retrieved from self.request.GET
+        on_sale = self.request.GET.get("discount")
+        order_by = self.request.GET.get("sort")
+        price_under_120 = self.request.GET.get("price_under_120")
+        size_equal_8 = self.request.GET.get("size_equal_8")
+        print(f"order_by = {order_by}")
+        print(f"on_sale = {on_sale}")
+        #if size_equal_8:
+            #prods = ProductSizeQuantity.objects.filter(size__size="8.0")
+
+        #print(f"Size 8 = {prods}")
         #Showing the products by categories or by q 
         if category_slug=='all-items':
             products=super().get_queryset() #Same as Products.objects.all()
@@ -99,6 +107,7 @@ class CatalogView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Catalog"
         context['slug_url'] = self.kwargs.get("category_slug")
+
         return context
     
      
@@ -113,19 +122,34 @@ class CatalogView(ListView):
 
 
 class ProductView(DetailView):
-    #model = Products
-    #slug_field = 'slug'
-    template_name="goods/product.html"
-    slug_url_kwarg="product_slug"
+    model = Products
+    template_name = "goods/product.html"
+    slug_field = 'slug'
+    slug_url_kwarg = "product_slug"
     context_object_name = 'product'
 
     def get_object(self):
         product = get_object_or_404(Products, slug=self.kwargs.get(self.slug_url_kwarg))
         return product
-    
+
     def get_context_data(self, **kwargs):
-        print(self.object.price)
         context = super().get_context_data(**kwargs)
+        product_sizes = ProductSizeQuantity.objects.filter(product=self.object)
+        comments = Comments.objects.filter(product=self.object)
+        has_purchased = False
+        if self.request.user.is_authenticated:
+            has_purchased = OrderItem.objects.filter(order__user=self.request.user, product=self.object).exists()
+
+        context['sizes'] = product_sizes
         context['title'] = self.object.name
+        context['comments'] = comments
+        context['has_purchased'] = has_purchased  
+
+        print(f"has_purchased={has_purchased}")
         return context
+
+    
+
+
+
     

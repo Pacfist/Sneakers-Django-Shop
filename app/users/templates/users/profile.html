@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load cache %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
@@ -38,6 +38,7 @@
         <!-- Orders Section -->
         <div class="orders-section">
             <h2>Your Orders</h2>
+            {% comment %} {% cache 60 user_orders user.id %} {% endcomment %}
             {% for order in orders %}
                 <div class="order-card">
                     <div class="order-header">
@@ -54,11 +55,13 @@
                                 <p><strong>Quantity:</strong> {{ item.quantity }}</p>
                             </div>
                         {% endfor %}
+                        
                     </div>
                 </div>
             {% empty %}
                 <p>No orders found.</p>
             {% endfor %}
+            {% comment %} {% endcache %} {% endcomment %}
         </div>
     </div>
 </div>

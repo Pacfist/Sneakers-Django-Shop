@@ -1,158 +1,102 @@
 {% extends "base.html" %}
 {% load static %}
 {% load goods_tags %}
-
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
 
 <div class="main-page">
     <h1>Sneaker Catalog</h1>
+
     <div id="notifications-container">
-    {% include "includes/notifications.html" %}
-</div>
+        {% include "includes/notifications.html" %}
+    </div>
 
     <button id="filterButton" class="btn filter-btn">Filter</button>
 
-        <!-- Filter Form (hidden by default) -->
-        
-        <div id="filterForm" class="filter-form">
-             <!--SEARCH FORM -->
-            <form  action="{% if request.GET.q %}{% url "search" %}{% else %}{% url 'catalog' slug_url %}{% endif %}" id="filterFormInner" method="get">
-                <!-- Discount Checkbox -->
-                <div class="form-group">
-                    <input type="checkbox" id="discount" name="discount" value="on"  {% if request.GET.discount == 'on' %}checked{% endif %}>
-                    {% if request.GET.q %}
-                        <input type="hidden" name="q" value="{{reuqest.GET.q}}">
-                    {% endif %}
-                    <label for="discount">Show only discounted sneakers</label>
-                    <hr>
-                    <input type="checkbox" id="price_under_120" name="price_under_120" value="on"  {% if request.GET.price_under_120 == 'on' %}checked{% endif %}>
-                    <label for="discount">Price under 120CAD</label>
-                </div>
+    <!-- Filter Form -->
+    <div id="filterForm" class="filter-form">
+        <form action="{% if request.GET.q %}{% url "search" %}{% else %}{% url 'catalog' slug_url %}{% endif %}" id="filterFormInner" method="get">
+            <div class="form-group">
+                <input type="checkbox" id="discount" name="discount" value="on" {% if request.GET.discount == 'on' %}checked{% endif %}>
+                {% if request.GET.q %}
+                    <input type="hidden" name="q" value="{{ request.GET.q }}">
+                {% endif %}
+                <label for="discount">Show only discounted sneakers</label>
+                <hr>
+                <input type="checkbox" id="price_under_120" name="price_under_120" value="on" {% if request.GET.price_under_120 == 'on' %}checked{% endif %}>
+                <label for="price_under_120">Price under 120 CAD</label>
+                <hr>
+                <input type="checkbox" id="size_equal_8" name="size_equal_8" value="on" {% if request.GET.size_equal_8 == 'on' %}checked{% endif %}>
+                <label for="size_equal_8">Size:8.0</label>
+            </div>
 
-                <!-- Sort Options -->
-                <div class="form-group">
-                    <label for="sort">Sort by:</label>
-                    <select id="sort" name="sort">
-                        <option value='default' {% if not request.GET.sort or request.GET.sort == 'default'%}selected{% endif %}>Default</option>
-                        <option value="low-to-high" {% if request.GET.sort == 'low-to-high' %}selected{% endif %}>Price: Low to High</option>
-                        <option value="high-to-low" {% if request.GET.sort == '-high-to-low' %}selected{% endif %}>Price: High to Low</option>
-                        <option value="-id" {% if request.GET.sort == '-id' %}selected{% endif %}>New One</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="sort">Sort by:</label>
+                <select id="sort" name="sort">
+                    <option value="default" {% if not request.GET.sort or request.GET.sort == 'default' %}selected{% endif %}>Default</option>
+                    <option value="low-to-high" {% if request.GET.sort == 'low-to-high' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="high-to-low" {% if request.GET.sort == 'high-to-low' %}selected{% endif %}>Price: High to Low</option>
+                    <option value="-id" {% if request.GET.sort == '-id' %}selected{% endif %}>Newest</option>
+                </select>
+            </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn apply-filter-btn">Apply Filters</button>
-            </form>
-        </div>
+            <button type="submit" class="btn apply-filter-btn">Apply Filters</button>
+        </form>
+    </div>
 
-        {% if request.GET.q %}
-        <h3>The results for search "{{request.GET.q}}"</h3>
+    {% if request.GET.q %}
+        <h3>The results for search "{{ request.GET.q }}"</h3>
         {% if not products %}
-        <h3>We could not find anything :( </h3>
+            <h3>We could not find anything :(</h3>
         {% endif %}
-        {% endif %}
-        <div class="catalog-container">
-            {% for product in products %}
-             <div class="catalog-item">
-                 {% if product.image %}
-                 <a href="{% url 'product' product.slug %}"><img src="{{product.image.url}}" alt="{{product.name}}" class="sneaker-img"></a>
-                 {% else %}
-                     <img src="{% static 'images/notfound.jpg' %}" alt="Sneaker Not Found" class="sneaker-img-notfound">
-                 {% endif %}
-                 <a href="{% url 'product' product.slug %}"><h2>{{product.name}}</h2></a>
-                 {% if product.descount %}
-                     <p class="price">
-                         <span class="original-price">{{product.price|floatformat:2}} CAD</span>
-                         <span class="discount-price">{{product.sell_price|floatformat:2}} CAD</span>
-                     </p>
-                     <span class="discount-label">{{product.descount}}% OFF</span>
-                 {% else %}
-                     <p class="price">{{product.price|floatformat:2}} CAD</p>
-                 {% endif %}
-                 <p class="price">id:{{product.display_id}}</p>
-                 
-                 {% if product.quantity <= 10 %}
-                 <p class="discount-price" >Only {{product.quantity}} left</p>
-                 {% endif %}
-                 
-                 
-                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                 <button class="add-cart" type="button" value="{{product.id}}" id="add-cart"> {% csrf_token %} Add to Cart</button>
+    {% endif %}
 
-             </div>
-            {% endfor %}
-         </div>
-         
-    
-    <div class="pagination">
-        
-        <ul>
+    <div class="catalog-container">
+        {% for product in products %}
+        <div class="catalog-item">
+            {% if product.image %}
+                <a href="{% url 'product' product.slug %}">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="sneaker-img">
+                </a>
+            {% else %}
+                <img src="{% static 'images/notfound.jpg' %}" alt="Sneaker Not Found" class="sneaker-img-notfound">
+            {% endif %}
+            <a href="{% url 'product' product.slug %}">
+                <h2>{{ product.name }}</h2>
+            </a>
+            {% if product.descount %}
+                <p class="price">
+                    <span class="original-price">{{ product.price|floatformat:2 }} CAD</span>
+                    <span class="discount-price">{{ product.sell_price|floatformat:2 }} CAD</span>
+                </p>
+                <span class="discount-label">{{ product.descount }}% OFF</span>
+            {% else %}
+                <p class="price">{{ product.price|floatformat:2 }} CAD</p>
+            {% endif %}
             
-            <li><a href="?page={{1}}">First</a></li>
-            <li class="{% if not page_obj.has_previous %} disabled {% endif %}">
-                <a href="{% if page_obj.has_previous %}
-                    ?{% change_params page=page_obj.previous_page_number %}
-                    {% else %}#
-                {% endif %}">Previous</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <ul>
+            <li><a href="?page=1">First</a></li>
+            <li class="{% if not page_obj.has_previous %}disabled{% endif %}">
+                <a href="{% if page_obj.has_previous %}?{% change_params page=page_obj.previous_page_number %}{% else %}#{% endif %}">Previous</a>
             </li>
-
-
             {% for page in page_obj.paginator.page_range %}
-               {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+                {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
                     {% if curren_num_page == page %}
-                        <li ><a href="?{% change_params page=page %}" class='on_num_pagination'>{{ page }}</a></li>
+                        <li><a href="?{% change_params page=page %}" class="on_num_pagination">{{ page }}</a></li>
                     {% else %}
                         <li><a href="?{% change_params page=page %}">{{ page }}</a></li>
                     {% endif %}
                 {% endif %}
             {% endfor %}
-            <li class="{% if not page_obj.has_next %} disabled {% endif %}">
-                <a href="{% if page_obj.has_next %}
-                    ?{% change_params page=page_obj.next_page_number %}
-                    {% else %}#
-                {% endif %}">Next</a>
+            <li class="{% if not page_obj.has_next %}disabled{% endif %}">
+                <a href="{% if page_obj.has_next %}?{% change_params page=page_obj.next_page_number %}{% else %}#{% endif %}">Next</a>
             </li>
-            
         </ul>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).on('click', '#add-cart', function(e) {
-            e.preventDefault();
-            const productId = $(this).val();  // Get product ID from clicked button
-            $.ajax({
-                type: 'POST',
-                url: '{% url "cart_add" %}',
-                data: {
-                    product_id: productId,
-                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                    action: 'post'
-                },
-                success: function(json) {
-                    // Update the total cart quantity displayed in the header or wherever the quantity is shown
-                    document.getElementById("goods-in-cart-count").textContent = json.qty;
-    
-                    // Update the cart HTML section with the newly rendered cart_items_html
-                    $('#cart-section').html(json.cart_items_html);
-    
-                    // Inject the new messages into the notification area and display them
-                    $('.messages-container').html(json.messages_html);
-    
-                    // Automatically hide messages after 5 seconds
-                    setTimeout(function() {
-                        $('.message').fadeOut('slow');
-                    }, 5000);
-                },
-                error: function(xhr, errmsg, err) {
-                    console.error(errmsg);
-                }
-            });
-        });
-
-        
-    </script>
-    
-
 </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% load goods_tags %}
 {% load static %}
 {% load carts_tags %}
-
+{% load cache %}
 {% user_carts request as cart %}
 
 <!DOCTYPE html>
@@ -76,10 +76,12 @@
             <span class="close" onclick="closeModal('catalogModal')">&times;</span>
             <h2>Catalog</h2>
             <div class="catalog-grid">
+                {% cache 60 catalog_categories %}
                 {% tag_categories as categories %}
                 {% for cat in categories%}
                 <a href="{% url "catalog" cat.slug %}" class="catalog-item">{{cat.name}}</a>
                 {% endfor %}
+                {% endcache %}
             </div>
         </div>
     </div>

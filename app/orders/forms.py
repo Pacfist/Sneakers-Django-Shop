@@ -15,7 +15,7 @@ class CreateOrderForm(forms.ModelForm):
     city = forms.CharField(label="City", max_length=20)
     postal_code = forms.CharField(label="Postal code", max_length=20)
     country = forms.CharField(label="Country", max_length=50)
-    #should be write like clean_"the name of the field", django will understand it
+    
     def clean_phone_number(self):
         data = self.cleaned_data['phone_number']
 

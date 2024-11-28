@@ -1,5 +1,5 @@
 from django.contrib import admin
-from goods.models import Categories, Products
+from goods.models import Categories, Products, Sizes, ProductSizeQuantity
 
 @admin.register(Categories)
 class CaregoriesAdmin(admin.ModelAdmin):
@@ -12,4 +12,12 @@ class ProductsAdmin(admin.ModelAdmin):
     list_editable=['descount']
     search_fields=['name']
     list_filter=['descount', 'category']
+
+@admin.register(Sizes)
+class SizeAdmin(admin.ModelAdmin):
+    list_display=['name', 'slug']
+
+@admin.register(ProductSizeQuantity)
+class SizeQuantityAdmin(admin.ModelAdmin):
+    list_display=['product', 'size', 'quantity']
 

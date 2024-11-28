@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from carts.models import Cart
+from carts.models import Cart,Comments
 
 class CartTabAdmin(admin.TabularInline):
     model = Cart 
@@ -21,3 +21,7 @@ class CartAdmin(admin.ModelAdmin):
     
     def product_display(self, obj):
         return str(obj.product.name)
+
+@admin.register(Comments)
+class CommentsAdmin(admin.ModelAdmin):
+    list_display=['user', 'product', 'body', 'updated', 'created']

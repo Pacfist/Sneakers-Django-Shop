@@ -11,7 +11,8 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView,UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
-
+from django.core.cache import cache
+from common.mixins import CacheMixin
 # def login(request):#login for user
 #     if request.method == 'POST':
 #         form = UserLoginForm(data=request.POST)#using login form from forms.py
@@ -145,7 +146,7 @@ class UserRegistrationView(CreateView):
 #     return render(request, 'users/profile.html', context)
 
 
-class UserProfileView(LoginRequiredMixin, UpdateView):
+class UserProfileView(LoginRequiredMixin, CacheMixin, UpdateView):
     template_name = 'users/profile.html'
     form_class = ProfileUser
     success_url = reverse_lazy('user:profile')
@@ -161,12 +162,18 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Profile'
-        context['orders'] = Order.objects.filter(user=self.request.user).prefetch_related(
+
+        
+        
+        orders = Order.objects.filter(user=self.request.user).prefetch_related(
             Prefetch(
                 "orderitem_set",
                 queryset=OrderItem.objects.select_related("product").order_by("-id"),
             )
         )
+            
+        context['orders'] = self.set_get_cashe(orders, f"user_{self.request.user.id}_orders", 60*2)
+
         return context
     
 

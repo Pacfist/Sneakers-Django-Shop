@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-from goods.models import Products
+from goods.models import Products,ProductSizeQuantity
 
 
 class OrderitemQueryset(models.QuerySet):
@@ -36,11 +36,15 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.pk} | Buyer {self.user.first_name}"
+    class Meta:
+        ordering = ['-id'] 
+
     
 
 class OrderItem(models.Model):
     order = models.ForeignKey(to=Order, on_delete=models.CASCADE)
     product = models.ForeignKey(to=Products, on_delete=models.SET_DEFAULT, null=True, default=None)
+    size = models.ForeignKey(to=ProductSizeQuantity, on_delete=models.SET_DEFAULT, null=True,blank = True, default=None)
     name = models.CharField(max_length=150)
     price = models.DecimalField(max_digits=7, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
