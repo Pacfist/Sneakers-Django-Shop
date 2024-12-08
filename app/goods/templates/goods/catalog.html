@@ -80,7 +80,7 @@
 
     <div class="pagination">
         <ul>
-            <li><a href="?page=1">First</a></li>
+            <li><a href="?{% change_params page=1 %}">First</a></li>
             <li class="{% if not page_obj.has_previous %}disabled{% endif %}">
                 <a href="{% if page_obj.has_previous %}?{% change_params page=page_obj.previous_page_number %}{% else %}#{% endif %}">Previous</a>
             </li>

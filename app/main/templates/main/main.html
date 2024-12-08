@@ -1,8 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}
 
-    </div>
-    <h1>Welcome to Sneaker Store</h1>
-    </div>
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/main_page.css' %}">
+<div class="main-container">
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Sneaker Store</h1>
+            <p>Step into the latest sneaker trends with unmatched comfort and style!</p>
+            <a href="{% url "catalog" "all-items" %}" class="cta-button">Shop Now</a>
+        </div>
+    </section>
+
+    
+    
+
+    <!-- Featured Products -->
+    <section class="product-section">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">{{ product.name }}</h3>
+                    <p class="product-price">${{ product.price }}</p>
+                    <a href="{% url "product" product.slug %}" class="product-button">View Product</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</div>
 {% endblock %}

@@ -30,6 +30,7 @@ class Products(models.Model):
     quantity=models.PositiveBigIntegerField(default=0)
     category=models.ForeignKey(to=Categories, on_delete=models.CASCADE)
     
+    
 
     def __str__(self):
         return self.name
@@ -50,7 +51,8 @@ class Products(models.Model):
 class ProductSizeQuantity(models.Model):
     product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="product_sizes")
     size = models.ForeignKey(Sizes, on_delete=models.CASCADE, related_name="size_products")
-    quantity = models.PositiveIntegerField(default=0)  
+    quantity = models.PositiveIntegerField(default=0) 
+
 
     class Meta:
         unique_together = ('product', 'size')  

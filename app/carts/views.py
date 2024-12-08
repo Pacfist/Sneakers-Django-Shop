@@ -22,12 +22,9 @@ class CartAddView(View):
     def post(self, request):
         product_id = request.POST.get("product_id")
         size_id = request.POST.get("size_id")
-        print(size_id)
         product = get_object_or_404(Products, id=product_id)
         size = get_object_or_404(ProductSizeQuantity, id = size_id)
-        # Check if the cart item already exists
-
-        
+         
         if request.user.is_authenticated:
             user = request.user
             session_key=None

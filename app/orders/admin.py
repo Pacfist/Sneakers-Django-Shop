@@ -12,14 +12,6 @@ class OrderTabulareAdmin(admin.TabularInline):
     readonly_fields = ("created_timestamp",)
     extra = 0
 
-
-#class OrderItemTabilareAdmin(admin.TabularInline):
-    #model = OrderItem
-    #fields = "product", "name", "price", "quantity"
-    #extra = 0
-
-
-
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = [

@@ -38,13 +38,24 @@
                 <h3>Cart Summary</h3>
                 <p>Total Items: {{ cart.total_quantity }}</p>
                 <p>Total Price: {{ cart.total_price }} CAD</p>
-                {% if not show_checkout_button %} <a href="{% url 'order:create_order' %}" class="btn-checkout">Proceed to Checkout</a>{% endif %}
+                {% comment %} {% if not show_checkout_button %} <a href="{% url 'order:create_order' %}" class="btn-checkout">Proceed to Checkout</a>{% endif %} {% endcomment %}
                 
             </div>
+
+           <form method="post" action = "{% url 'order:checkout' %}">
+                {% csrf_token %}
+            <input type="hidden" name="cart_id" value="{{cart.id}}">
+            <button type="submit" class="btn add-cart">Buy</button>
+            </form> 
+
         {% else %}
             <div class="cart-summary">
                 <p class="empty-cart">Your cart is empty.</p>
             </div>
+
+            
         {% endif %}
+
+        
     </div>
 </div>

@@ -28,6 +28,7 @@
         <form method="post" action="{% url 'cart_add' %}">
             {% csrf_token %}
             <input type="hidden" name="product_id" value="{{ product.id }}">
+            <input type="hidden" name="price_id" value="{{product.price_id}}">
             <label for="sizes">Select Size:</label>
             <select id="sizes" name="size_id" required>
                 {% for size in sizes %}
@@ -51,6 +52,8 @@
         </div>
         {% endif %}
         {% endif %}
+
+        
 
         <div class="comments-list">
             <h2 class="comments-title">Comments</h2>

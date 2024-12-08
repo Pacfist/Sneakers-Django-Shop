@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-
+from goods.models import Products
 
 
 class IndexView(TemplateView):
@@ -8,8 +8,10 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        products = Products.objects.order_by('-id')[:3]
         context['title']='Home'
         context['content']='Main page of website'
+        context['products'] = products
         return context
 
 

@@ -30,6 +30,11 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
+RECAPTCHA_PUBLIC_KEY = '6LdVLo4qAAAAAJ5AgLv6HUZ3aeMOIonuBXg-H_ra'
+RECAPTCHA_PRIVATE_KEY = '6LdVLo4qAAAAABJM3uYCl6WCyFoL3U5mmRZaKAFo'
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
 
     'debug_toolbar',
+    'django_recaptcha',
 
     'main',
     'goods',
@@ -167,3 +173,10 @@ MEDIA_ROOT=BASE_DIR/'media'
 LOGIN_URL='/user/login/'
 
 LOGIN_REDIRECT_URL = '/'
+
+STRIPE_PUBLIC_KEY="pk_test_51QQgK0JNffcOYr2oAbELeEIcR3jZDA6eiTv5qRXTDeHfGlide5Y2afllAvT1sPdIfyvkAn2l8xKVxgNQOuacqhWq00YoQ5CxHE"
+STRIPE_SECRET_KEY="sk_test_51QQgK0JNffcOYr2oZCJN9gAonzFdPPCteHNoBXGITtiYuqskFcjSu7K44Wv3YTrx0avK2AgdzbDmIBSGFPhOIbOR00eRs4WVWM"
+STRIPE_WEBHOOK_SECRET="whsec_c8c92f629b88b8a79af38aaf06606b9fdfa638d308c6ec5bd01f9fc551b921f6"
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

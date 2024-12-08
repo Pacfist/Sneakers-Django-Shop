@@ -27,19 +27,14 @@ class Order(models.Model):
     is_paid = models.BooleanField(default=False)
     status = models.CharField(max_length=50, default='Processing...')
     
-    # Payment information fields
-    card_name = models.CharField(max_length=100)
-    card_number = models.CharField(max_length=16)
-    expiry_date = models.CharField(max_length=5)  # MM/YY format
-    cvv = models.CharField(max_length=4)
+    
     
 
     def __str__(self):
         return f"Order {self.pk} | Buyer {self.user.first_name}"
     class Meta:
         ordering = ['-id'] 
-
-    
+     
 
 class OrderItem(models.Model):
     order = models.ForeignKey(to=Order, on_delete=models.CASCADE)

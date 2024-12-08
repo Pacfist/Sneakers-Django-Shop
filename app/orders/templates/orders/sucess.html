@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .success-container {
+            text-align: center;
+            padding: 50px;
+        }
+        .success-container h1 {
+            font-size: 2.5rem;
+            color: #4caf50;
+        }
+        .success-container p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+        .success-container a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-decoration: none;
+            background-color: #4caf50;
+            color: #fff;
+            border-radius: 5px;
+        }
+        .success-container a:hover {
+            background-color: #45a049;
+        }
+        .success-container img {
+            max-width: 150px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <h1>Payment Successful! 🎉</h1>
+        <p>Thank you for your purchase. Your transaction has been completed successfully.</p>
+        <p>If you have any questions or need assistance, feel free to reach out to us at:</p>
+        <a href="mailto:orders@example.com">orders@example.com</a>
+        <br>
+        
+        <p><a href="/">Return to Home</a></p>
+    </div>
+</body>
+</html>
+{% endblock %}

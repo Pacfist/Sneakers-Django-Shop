@@ -3,6 +3,7 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<script src="https://www.google.com/recaptcha/api.js?render=your-public-key"></script>
 
 <div class="auth-container">
     <div class="auth-form">
@@ -50,6 +51,9 @@
             {% if form.password2.errors %}
             <p>{{form.password2.errors}}</p>
             {% endif %}
+            
+            {{form.captcha}}
+            <p></p>
 
             <button type="submit" class="btn">Register</button>
         </form>
