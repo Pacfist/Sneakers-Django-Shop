@@ -1,4 +1,4 @@
-{% load static %}
+{% comment %} {% load static %}
 {% load carts_tags %}
 {% user_carts request as cart %}
 
@@ -38,7 +38,7 @@
                 <h3>Cart Summary</h3>
                 <p>Total Items: {{ cart.total_quantity }}</p>
                 <p>Total Price: {{ cart.total_price }} CAD</p>
-                {% comment %} {% if not show_checkout_button %} <a href="{% url 'order:create_order' %}" class="btn-checkout">Proceed to Checkout</a>{% endif %} {% endcomment %}
+                 {% if not show_checkout_button %} <a href="{% url 'order:create_order' %}" class="btn-checkout">Proceed to Checkout</a>{% endif %}
                 
             </div>
 
@@ -57,5 +57,73 @@
         {% endif %}
 
         
+    </div>
+</div> {% endcomment %}
+
+{% load carts_tags %}
+{% user_carts request as temp %}
+{% user_carts_total request as total %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+
+<div class="cart-container">
+    <h2 class="cart-title">Cart</h2>
+    <div class="cart-items">
+        
+        
+        {% if temp %}
+            {% for key , item in temp.items %}
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <!-- Assuming you have a URL field for product images -->
+                        <img src="{{ item.image_url }}" alt="{{ item.product_name }}">
+                    </div>
+                    <div class="cart-item-details">
+                        
+                        <h4 class="cart-item-title">{{ item.product_name }}</h4>
+                        <h4 class="cart-item-title">Size: {{ item.size_name }}</h4>
+                        <p class="cart-item-price">{{ item.price }} CAD</p>
+                        <p class="cart-item-price">Quantity: {{ item.quantity }}</p>
+
+                        {% comment %} <div class="quantity-controls">
+                            <form method="post" action="{% url 'cart_update' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                                <input type="hidden" name="size_id" value="{{ item.size_id }}">
+                                <button type="submit" name="action" value="decrease">-</button>
+                                <span class="quantity-display">{{ item.quantity }}</span>
+                                <button type="submit" name="action" value="increase">+</button>
+                            </form>
+                        </div> {% endcomment %}
+                    </div>
+                    <div class="cart-item-actions">
+                        
+                        <form method="post" action="{% url 'cart_remove' key %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                            <input type="hidden" name="size_id" value="{{ item.size_id }}">
+                            <button type="submit" class="btn-remove">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="cart-summary">
+                <h3>Cart Summary</h3>
+                <p>Total Items: {{ total.total_quantity }}</p>
+                <p>Total Price: {{ total.total_price }} CAD</p>
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'order:checkout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn add-cart">Buy</button>
+                </form>
+                {% else %}
+                <p>Login or create account to buy</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="cart-summary">
+                <p class="empty-cart">Your cart is empty.</p>
+            </div>
+        {% endif %}
     </div>
 </div>

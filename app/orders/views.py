@@ -29,22 +29,24 @@ class CreateCheckout(View):
     YOUR_DOMAIN = "http://127.0.0.1:8000/orders/"
 
     def post(self, request, *args, **kwargs):
-        items = Cart.objects.filter(user=self.request.user)
+        products = self.request.session.get("carts", {})
+        print(products)
         itemList = []
         
 
-        for item in items:
+        for key, item in products.items():
             # Use price_data to create prices dynamically
+            print(int(item['price'] * 100))
             itemList.append({
                 'price_data': {
                     'currency': 'cad',  # Use your currency
-                    'unit_amount': int(item.product.sell_price() * 100),  # Convert to cents
+                    'unit_amount': int(item['price'] * 100),  # Convert to cents
                     'product_data': {
-                        'name': item.product.name,
-                        'description': f"Size: {item.size.size}",  # Add size in the product description
+                        'name': item['product_name'],
+                        'description': f"Size: {item['size_name']}",  # Add size in the product description
                     },
                 },
-                'quantity': item.quantity,
+                'quantity': int(item['quantity']),
             })
 
             # Append item details to metadata list
@@ -58,7 +60,8 @@ class CreateCheckout(View):
                 success_url=self.YOUR_DOMAIN + 'success/',
                 cancel_url=self.YOUR_DOMAIN + 'cancel/',
                 metadata={
-                    'user': self.request.user.id  # Serialize the items list to JSON
+                    'user': self.request.user.id , # Serialize the items list to JSON
+                    'products': json.dumps(products), 
                 },
                 billing_address_collection='required',  # Collect billing address
                 shipping_address_collection={           # Collect shipping address
@@ -105,11 +108,15 @@ def my_webhook_view(request):
         
         session = event['data']['object']
         user_id = session["metadata"]["user"]
+
         customer_email=session["customer_details"]["email"]
-        cart = Cart.objects.filter(user_id=user_id)
         body=""
-        for i in cart:
-            body+=f"{i.product.name}, "
+        products = json.loads(session["metadata"]["products"])
+        print(f"The products in web-hook ----------------------------\n{products}")
+
+        body = ", ".join(item["product_name"] for item in products.values())
+
+
         body = body.strip(", ")
         send_mail(
             subject = "Here is yours product",
@@ -128,8 +135,9 @@ def my_webhook_view(request):
         city = address["city"]
         postal = address["postal_code"]
         country = address["country"]
+
         try:
-            order = Order.objects.create(
+            Order.objects.create(
                                 user=user,
                                 full_name=customer_name,
                                 phone_number=phone,
@@ -140,17 +148,7 @@ def my_webhook_view(request):
                                 country=country,
                                 status="Purchase was succesfull"
                             )
-            for i in cart:
-                OrderItem.objects.create(
-                                    order=order,
-                                    product=i.product,
-                                    name=i.product.name,
-                                    price=i.product.price,
-                                    quantity=i.quantity,
-                                    size=i.size,  
-                                )
-            cart.delete()
-        except Exception as e:
+        except:
             print(f"Error creating order: {str(e)}")
             return HttpResponse(status=500)
     return HttpResponse(status=200)
@@ -161,6 +159,35 @@ class Success(TemplateView):
     
 
     def get_context_data(self, **kwargs):
+        products = self.request.session.get("carts", {})
+        if self.request.user.is_authenticated:
+            order = Order.objects.filter(user=self.request.user).order_by('-id').first()
+        
+
+        if order.status!="Purchase was succesfull":
+            return redirect("main")
+        try:
+            products = self.request.session.get("carts", {})
+            
+            for key, item in products.items():
+                
+                
+                 
+                OrderItem.objects.create(
+                                    order=order,
+                                    product=Products.objects.get(name = item["product_name"]),
+                                    name=item["product_name"],
+                                    price=item["price"],
+                                    quantity=item["quantity"],
+                                    size=ProductSizeQuantity.objects.get(id = item["size_id"])
+                                )
+                
+            del self.request.session['carts']
+            self.request.session.modified = True
+        except Exception as e:
+            print(f"Error creating order: {str(e)}")
+            return HttpResponse(status=500)
+        
         context = super().get_context_data(**kwargs)
         context['content']='Main page of website'
         

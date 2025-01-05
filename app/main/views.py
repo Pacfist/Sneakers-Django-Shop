@@ -7,11 +7,13 @@ class IndexView(TemplateView):
     template_name='main/main.html'
 
     def get_context_data(self, **kwargs):
+        cart = self.request.session.get("carts", {})
         context = super().get_context_data(**kwargs)
         products = Products.objects.order_by('-id')[:3]
         context['title']='Home'
         context['content']='Main page of website'
         context['products'] = products
+        context['temp'] = cart
         return context
 
 
@@ -36,6 +38,7 @@ class AboutView(TemplateView):
     template_name='main/about.html'
 
     def get_context_data(self, **kwargs):
+        
         context = super().get_context_data(**kwargs)
         context['title']='About'
         context['content_info']='About the sneaker shop'

@@ -11,42 +11,50 @@ from django.views import View
 from carts.mixins import CartMixin
 from urllib.parse import urlencode
 from carts.models import Comments
-# Create your views here.
+
 
 from django.contrib import messages
 
 from django.contrib import messages
 from django.template.loader import render_to_string
 
+
+
+
 class CartAddView(View):
     def post(self, request):
         product_id = request.POST.get("product_id")
         size_id = request.POST.get("size_id")
         product = get_object_or_404(Products, id=product_id)
-        size = get_object_or_404(ProductSizeQuantity, id = size_id)
-         
-        if request.user.is_authenticated:
-            user = request.user
-            session_key=None
-        else:
-            user = None
-            session_key = request.session.session_key
+        size = get_object_or_404(ProductSizeQuantity, id=size_id)
 
         
+        # Retrieve or initialize the cart
+        cart = request.session.get("carts", {})
 
-        cart, created = Cart.objects.get_or_create(
-            user=user,
-            session_key = session_key,
-            product=product,
-            size=size,
-        )
-        # If the item is newly created, set the initial quantity to 1
-        if created:
-            cart.quantity = 1
+        # Generate a unique key for the item
+        item_key = f"{product_id}-{size_id}"
+
+        # Calculate the price
+        price = product.sell_price() if callable(product.sell_price) else product.sell_price
+
+        if item_key in cart:
+            cart[item_key]["quantity"] += 1  # Increment quantity if item exists
         else:
-            cart.quantity += 1  # Increment the quantity for existing items
+            cart[item_key] = {
+                "product_id": product_id,
+                "size_id": size_id,
+                "quantity": 1,
+                "price": float(price),  # Ensure price is JSON serializable
+                "product_name": product.name,
+                "size_name": str(size.size),
+                "image_url": product.image.url
+            }
+        
+        
+        self.request.session["carts"] = cart
 
-        cart.save()
+        self.request.session.modified = True
 
         # Get the original query parameters
         referer = request.META.get('HTTP_REFERER')
@@ -62,11 +70,11 @@ def cart_change(request,product_slug):
 
 
 class CartRemoveView(View):
-    def post(self, request):
-        cart_id = request.POST.get("cart_id")
-        cart = get_object_or_404(Cart, id=cart_id)
-        cart.delete()
+    def post(self, request,key):
 
+        print(key)
+        del request.session['carts'][key]
+        request.session.modified = True
         messages.success(request, "Item removed from the cart.")
         
         # Redirect to the previous page
@@ -99,7 +107,42 @@ class CommentView(View):
 
 
 
+# class CartAddView(View):
+#     def post(self, request):
+#         product_id = request.POST.get("product_id")
+#         size_id = request.POST.get("size_id")
+#         product = get_object_or_404(Products, id=product_id)
+#         size = get_object_or_404(ProductSizeQuantity, id = size_id)
+#         # Check if the cart item already exists
+#         if request.user.is_authenticated:
+#             user = request.user
+#             session_key=None
+#         else:
+#             user = None
+#             session_key = request.session.session_key
 
+        
+
+#         cart, created = Cart.objects.get_or_create(
+#             user=user,
+#             session_key = session_key,
+#             product=product,
+#             size=size,
+#         )
+#         # If the item is newly created, set the initial quantity to 1
+#         if created:
+#             cart.quantity = 1
+#         else:
+#             cart.quantity += 1  # Increment the quantity for existing items
+
+#         cart.save()
+
+#         # Get the original query parameters
+#         referer = request.META.get('HTTP_REFERER')
+#         if referer:
+#             return redirect(referer)
+#         else:
+#             return redirect("catalog")
 
 
 # def cart_remove(request):

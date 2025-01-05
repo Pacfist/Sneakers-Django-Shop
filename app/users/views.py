@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.core.cache import cache
 from common.mixins import CacheMixin
+from goods.models import Products
 
 
 class UserLoginView(LoginView):
@@ -91,14 +92,41 @@ def logout(request):
 
 
 
-class UserCartView(LoginRequiredMixin,TemplateView):
-    template_name = "users/users_cart.html"
+# class UserCartView(LoginRequiredMixin,TemplateView):
+#     template_name = "users/users_cart.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["show_checkout_button"] = False
-        context['title'] = 'Cart'
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["show_checkout_button"] = False
+#         context['title'] = 'Cart'
+#         return context
+
+# class UserCartView(TemplateView):
+#     template_name = "users/users_cart.html"
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+
+#         # Retrieve the cart from the session
+#         cart = self.request.session.get("carts", {})
+
+#         print(cart)
+#         context["cart"] = cart
+#         context['title'] = 'Cart'
+#         return context
+    
+@login_required   
+def user_cart(request):
+    cart = request.session.get("carts", {})
+    total_price = 0
+    total_quantity = 0
+    image_urls=[]
+    for key,item in cart.items():
+        total_price += item['price'] * item['quantity']
+        total_quantity += item['quantity']
+    print(f"cart is in view = {cart}")
+    context = {"temp":cart, "total_quantity": total_quantity, "total_price":total_price}
+    return render(request, 'users/users_cart.html', context)
     
 
 # def registration(request):#registration for user
@@ -125,9 +153,7 @@ class UserCartView(LoginRequiredMixin,TemplateView):
 #     return render(request,'users/registration.html', context)
 
 
-# @login_required   
-# def user_cart(request):
-#     return render(request, 'users/users_cart.html', {"show_checkout_button":False})
+
 
 
 

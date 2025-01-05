@@ -1,6 +1,7 @@
 {% load goods_tags %}
 {% load static %}
 {% load carts_tags %}
+{% user_carts_total request as total %}
 {% load cache %}
 {% user_carts request as cart %}
 
@@ -51,7 +52,7 @@
             <button id="basketButton" class="btn">
                 <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon" class="btn-icon">
                 <sapn>Basket</span>
-                <span id="goods-in-cart-count"> {% if cart.total_quantity %}{{cart.total_quantity}}{% endif %}</span>
+                <span id="goods-in-cart-count"> {% if total.total_quantity %}{{total.total_quantity}}{% endif %}</span>
                 
             </button>
         </div>
