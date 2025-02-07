@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-utyjh39mmz33m8^66g&bjan%do!tj%cvo^85bqm(2k%qxpz1lg'
-
+SECRET_KEY =  os.environ.get('SECRET_KEY')
+#'django-insecure-utyjh39mmz33m8^66g&bjan%do!tj%cvo^85bqm(2k%qxpz1lg'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(' ')
 
 
 # Application definition
@@ -101,8 +102,10 @@ DATABASES = {
         
     }
 }
+database_url = os.environ.get('DATABASE_URL')
+DATABASES['default'] = dj_database_url.parse(database_url)
 
-
+#postgresql://sneakers_shop_django_render_user:a6aXrlTVdViF0pWNG4B7J9XkVfivFMiy@dpg-cuj7p3btq21c73amc7fg-a.oregon-postgres.render.com/sneakers_shop_django_render
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",

@@ -26,13 +26,7 @@ class CatalogView(ListView):
         on_sale = self.request.GET.get("discount")
         order_by = self.request.GET.get("sort")
         price_under_120 = self.request.GET.get("price_under_120")
-        size_equal_8 = self.request.GET.get("size_equal_8")
         
-        #if size_equal_8:
-            #prods = ProductSizeQuantity.objects.filter(size__size="8.0")
-
-        #print(f"Size 8 = {prods}")
-        #Showing the products by categories or by q 
         if category_slug=='all-items':
             products=super().get_queryset() #Same as Products.objects.all()
         elif query:

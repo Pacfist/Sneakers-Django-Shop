@@ -1,16 +1,89 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="main-page">
+<div class="main-page about-page">
     
-    <h1>About Sneaker Store</h1>
-    <p>Welcome to Sneaker Store, your ultimate destination for the latest and most stylish sneakers. 
-       We are passionate about footwear and committed to bringing you the best brands and exclusive collections. 
-       Our mission is to provide a seamless shopping experience with a diverse selection of sneakers for everyone.</p>
-    <p>Founded by sneaker enthusiasts, our store offers a carefully curated selection of footwear from top brands, 
-       catering to every style, from classic designs to the latest trends. Whether you're a casual wearer or a serious collector, 
-       Sneaker Store has something for you.</p>
-    <p>Visit us, explore our catalog, and step up your sneaker game!</p>
-    {{content_info}}
+    <div class="about-content">
+        <h2>Who We Are</h2>
+        <p>At Sneaker Store, we are driven by passion and a deep love for sneakers. Our goal is simple – to bring you the freshest kicks from top brands around the world. Whether you're chasing limited editions or everyday classics, we've got you covered.</p>
+
+        <h2>Our Story</h2>
+        <p>It all started with a group of sneaker enthusiasts who wanted to build a store that reflects their love for streetwear and footwear culture. Today, Sneaker Store is more than just a retail space – it's a community of collectors, trendsetters, and everyday wearers.</p>
+
+        <h2>Why Shop With Us?</h2>
+        <ul class="features-list">
+            <li>✨ Exclusive drops you won't find elsewhere</li>
+            <li>🏆 Authenticity guaranteed – no fakes, ever</li>
+            <li>📦 Fast and reliable shipping</li>
+            <li>🎁 Special discounts and rewards for loyal customers</li>
+        </ul>
+
+        <div class="cta-section">
+            <h3>Join Our Sneaker Community</h3>
+            <p>Sign up for our newsletter and stay updated on the latest releases, deals, and events.</p>
+            {% comment %} <a href="{% url 'signup' %}" class="btn btn-primary">Join Now</a> {% endcomment %}
+    </div>
+    </div>
+
+    
+
 </div>
+
+<style>
+.about-page {
+    text-align: center;
+    padding: 50px 20px;
+}
+.hero-section {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+.hero-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px 40px;
+    border-radius: 10px;
+}
+.about-content h2 {
+    margin-top: 40px;
+    font-size: 2rem;
+}
+.features-list {
+    list-style: none;
+    padding: 0;
+    font-size: 1.2rem;
+}
+.features-list li {
+    margin: 10px 0;
+}
+.cta-section {
+    margin-top: 50px;
+}
+.btn-primary {
+    background: #ff6600;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.gallery img {
+    width: 22%;
+    margin: 1%;
+    border-radius: 10px;
+}
+.map-section {
+    margin-top: 50px;
+}
+</style>
 {% endblock %}

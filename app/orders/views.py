@@ -135,9 +135,10 @@ def my_webhook_view(request):
         city = address["city"]
         postal = address["postal_code"]
         country = address["country"]
+        
 
         try:
-            Order.objects.create(
+            order = Order.objects.create(
                                 user=user,
                                 full_name=customer_name,
                                 phone_number=phone,
@@ -148,7 +149,8 @@ def my_webhook_view(request):
                                 country=country,
                                 status="Purchase was succesfull"
                             )
-        except:
+            print(f"Order created successfully: {order.id}")
+        except Exception as e:
             print(f"Error creating order: {str(e)}")
             return HttpResponse(status=500)
     return HttpResponse(status=200)
@@ -170,17 +172,20 @@ class Success(TemplateView):
             products = self.request.session.get("carts", {})
             
             for key, item in products.items():
-                
-                
-                 
+                size = ProductSizeQuantity.objects.get(id = item["size_id"])
+                product = Products.objects.get(name = item["product_name"])
                 OrderItem.objects.create(
                                     order=order,
-                                    product=Products.objects.get(name = item["product_name"]),
+                                    product=product,
                                     name=item["product_name"],
                                     price=item["price"],
                                     quantity=item["quantity"],
-                                    size=ProductSizeQuantity.objects.get(id = item["size_id"])
+                                    size=size
                                 )
+                size.quantity-=1
+                size.save()
+                product.quantity-=1
+                product.save()
                 
             del self.request.session['carts']
             self.request.session.modified = True
