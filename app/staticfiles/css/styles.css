@@ -1,0 +1,200 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+.together{
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0; /* Navbar will stick to the top of the viewport */
+    z-index: 1000; /* Ensure it stays on top of other content */
+}
+/* Navbar Styles */
+.navbar {
+    background-color: #333;
+    padding: 20px 40px; /* Increased padding to make the navbar taller */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px; /* Increased font size for the links */
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin-right: 30px; /* Increased spacing between the navbar items */
+}
+
+.navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.navbar ul li a:hover {
+    color: #ccc;
+}
+
+/* Search Container */
+.search-container {
+    display: flex;
+}
+
+.search-container input {
+    padding: 10px; /* Increased padding for a larger input field */
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    font-size: 16px; /* Increased font size for better readability */
+}
+
+.search-container button {
+    padding: 10px 20px; /* Increased button size for a larger look */
+    background-color: #555;
+    border: none;
+    color: #fff;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px; /* Increased font size to match the input */
+}
+
+.search-container button:hover {
+    background-color: #444;
+}
+/* Buttons */
+/* Button Container */
+.buttons {
+    
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+    margin: 20px 0;
+}
+
+/* Base Button Style */
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between text and icon */
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+.btn:active {
+    background-color: #003f7f;
+    transform: translateY(0); /* Reset on click */
+}
+
+/* Button Icon Styling */
+.btn-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1); /* Ensure icon is white */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* Main Content */
+.main-content {
+    padding: 20px;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 8px;
+}
+
+.catalog-content {
+    text-align: center;
+}
+
+.catalog-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.catalog-item {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.catalog-item:hover {
+    background-color: #e6e6e6;
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+

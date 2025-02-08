@@ -1,0 +1,252 @@
+/* Main Page */
+.main-page {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    max-width: 1200px;
+}
+
+/* Catalog Container */
+.catalog-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Catalog Item Card */
+.catalog-item {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    width: 250px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.3s;
+}
+
+.catalog-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Sneaker Images */
+.sneaker-img, .sneaker-img-notfound {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+/* Product Name */
+.catalog-item h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 10px 0;
+    text-decoration: none;
+}
+
+/* Price Styling */
+.price {
+    margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.original-price {
+    color: #999;
+    font-size: 14px;
+    text-decoration: line-through;
+}
+
+.discount-price {
+    color: #d32f2f;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Discount Label */
+.discount-label {
+    color: #fff;
+    background-color: #d32f2f;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+/* Add to Cart Button */
+.add-cart {
+    background-color: #008CBA;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-width: 200px;
+}
+
+.add-cart:hover {
+    background-color: #005f7f;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.add--cart:active {
+    background-color: #004a63;
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.pagination ul li {
+    display: inline;
+}
+
+.pagination ul li a {
+    text-decoration: none;
+    color: #007bff;
+    padding: 10px 18px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination ul li a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Styling for the current page number */
+.on_num_pagination {
+    background-color: #007bff;
+    color: white !important; /* Ensure text is white */
+    border-color: #007bff;
+    font-weight: bold;
+    font-size: 1rem;
+    
+}
+
+
+
+.filter-btn {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Filter Form (hidden by default) */
+.filter-form {
+    display: none; /* Initially hidden */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Filter Form Input Styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.form-group label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    margin-top: 5px;
+}
+
+.apply-filter-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.apply-filter-btn:hover {
+    background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .filter-form {
+        padding: 15px;
+    }
+
+    .form-group select {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .apply-filter-btn {
+        width: 100%;
+        padding: 12px;
+    }
+}
