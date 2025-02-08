@@ -130,7 +130,7 @@ def my_webhook_view(request):
         customer_email = session["customer_details"]["email"]
         customer_name = session["customer_details"]["name"] 
         address = session["customer_details"]["address"]
-        addres_ = f"{address["city"]} {address["line1"]} {address["line2"]} {address["postal_code"]}"
+        addres_ = f"{address['city']} {address['line1']} {address['line2']} {address['postal_code']}"
         phone = session["customer_details"]["phone"]
         city = address["city"]
         postal = address["postal_code"]
