@@ -1,5 +1,11 @@
-Django Sneakers Shop
+# 🏀 Django Sneakers Shop
 
+A fully functional **Django-powered e-commerce store** for sneakers, featuring:
 
+-  **Class-Based Views (CBVs)**
+-  **Session-Based Cart Storage**
+-  **Stripe Payment Integration (with Webhooks)**
+-  **PostgreSQL Database**
+-  **Deployed on Render**
 
-An e-commerce web application for buying sneakers, built with Django, PostgreSQL, and Stripe for payments. The cart is stored in Django sessions, and the project follows a Class-Based Views (CBVs) approach.
+🔗 **Live Demo:** [Django Sneakers Shop](https://django-sneakrs-shop-render.onrender.com)
