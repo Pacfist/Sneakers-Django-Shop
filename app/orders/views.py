@@ -26,7 +26,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 import json
 
 class CreateCheckout(View):
-    YOUR_DOMAIN = "http://127.0.0.1:8000/orders/"
+    YOUR_DOMAIN = "https://django-sneakrs-shop-render.onrender.com/orders/"
 
     def post(self, request, *args, **kwargs):
         products = self.request.session.get("carts", {})
