@@ -19,6 +19,7 @@ from django.urls import path, include
 from main.views import index
 from app import settings
 from django.conf.urls.static import static
+from django.views.static import serve
 
 
 urlpatterns = [
@@ -30,8 +31,16 @@ urlpatterns = [
     path('orders/',include('orders.urls', namespace='order')),
 ]
 
+# if settings.DEBUG:
+#     urlpatterns+=[
+#         path("__debug__/", include("debug_toolbar.urls"))
+#     ]
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 if settings.DEBUG:
-    urlpatterns+=[
-        path("__debug__/", include("debug_toolbar.urls"))
-    ]
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    # Serve media files in production
+    urlpatterns += [
+        path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
+    ]

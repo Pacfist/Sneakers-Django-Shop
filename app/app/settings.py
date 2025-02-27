@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django_recaptcha',
     'corsheaders',  # Add CORS for Stripe
+    "whitenoise.runserver_nostatic",
+
     'main',
     'goods',
     'users',
