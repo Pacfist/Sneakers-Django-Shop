@@ -8,4 +8,4 @@ A fully functional **Django-powered e-commerce store** for sneakers, featuring:
 -  **PostgreSQL Database**
 -  **Deployed on Render**
 
-🔗 **Live Demo:** [Django Sneakers Shop](https://django-sneakrs-shop-render.onrender.com)
+🔗 **Live Demo:** (Currently Unavailable) [Django Sneakers Shop](https://django-sneakrs-shop-render.onrender.com)
