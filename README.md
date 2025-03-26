@@ -1,4 +1,4 @@
-# 🏀 Django Sneakers Shop
+# 👟 Django Sneakers Shop
 
 A fully functional **Django-powered e-commerce store** for sneakers, featuring:
 
